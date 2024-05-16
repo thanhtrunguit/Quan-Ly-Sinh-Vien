@@ -1,0 +1,383 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    /*height: 100%;*/
+    /*padding: 0 ;*/
+    /*color: #000;*/
+}
+
+/*navbar*/
+.navBar{
+    background-color: #F8F9FA;
+    font-weight: bold;
+    font-size: 20px;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    align-items: center;
+}
+.navbar_logo{
+    color: white;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: rgba(28, 17, 41, 0.88 );
+    padding: 30px;
+}
+.navBar ul{
+    list-style: none;
+    padding-top: 40px;
+    margin-left: -40px;
+}
+.navBar li{
+    padding: 10px;
+    padding-left: 50px;
+    display: flex;
+    width: 250px;
+}
+#icons{
+    flex: 15%;
+}
+#title{
+    flex: 70%;
+}
+.navBar a{
+    text-decoration: none;
+}
+.navBar li:hover{
+    background-color: lightcyan;
+    /*border-radius: 18px ;*/
+}
+.logout_btn{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 150px;
+}
+.login_section_navbar{
+    /*text-decoration: none;*/
+    /*list-style: none;*/
+    /*position: relative;*/
+    /*right: 10px;*/
+    /*background-color: red;*/
+    /*width: 60px;*/
+}
+
+/*login_form*/
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #E0E4E7;
+}
+.container_login{
+    background-color: white;
+
+}
+.login_content{
+    border: 2px solid #ffffff;
+    padding: 3rem;
+    border-radius: 3px;
+    /*box-shadow: 2px 1px 2px 5px #D4D7DA;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.login_content input{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 100%;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.login_content img{
+    display: block;
+}
+.btn{
+    background: none;
+    cursor: pointer;
+    padding: .5rem 1rem;
+    font-size: 1.171875rem;
+    line-height: 1.5;
+    border-radius: .3rem;
+    font-weight: 400;
+    border: 1px solid #0f6cbf;
+    color: #fff;
+    background-color: #0f6cbf;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 10px;
+}
+.login_btn:hover{
+    background-color: #0D589C;
+
+}
+.password_forgot{
+    text-decoration: none;
+    margin-left: 2rem;
+    color: #0A4478;
+}
+/*home_section*/
+.function_items{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: 250px;
+}
+
+.function_icons{
+    font-size: 50px;
+    margin-left: 75px;
+    /*margin-top: 30px;*/
+}
+.item4{
+
+}
+.box{
+    border: 1px solid #8f959e;
+    width: 210px;
+    display: inline-block;
+    padding: 5px 5px;
+    margin: 10px;
+    height: 300px;
+    text-decoration: none;
+    padding-top: 50px;
+    font-size: 25px;
+
+}
+.function_items p{
+    text-align: center;
+    /*margin-top: -10px;*/
+}
+/*addStudent*/
+
+.form_container{
+    justify-content: center;
+    margin-left: 220px;
+    align-items: center;
+    height: 100vh;
+    display: flex;
+    text-align: center;
+}
+.form_content{
+    border: 2px solid #ffffff;
+    padding: 3rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cancel_btn{
+    margin-left: 50px;
+    background-color: white;
+    color: #8f959e;
+}
+.cancel_btn:hover{
+
+}
+.form_content input{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 500px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 0.5px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+.form_item{
+    padding: .1rem;
+}
+.form_content input[type='date']{
+    box-sizing: border-box;
+    position: relative;
+}
+.form_item p{
+    display: flex;
+    margin: 0;
+    font-size: 25px;
+    font-weight: lighter;
+
+
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+
+/*home_section*/
+.home_container{
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: 250px;
+    display: flex;
+    text-align: center;
+
+}
+.home_content {
+    border: 2px solid #ffffff;
+    padding: 3rem;
+    border-radius: 3px;
+    /*box-shadow: 2px 1px 2px 5px #D4D7DA;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*searchStudentX*/
+.searchStudent_container{
+    /*justify-content: center;*/
+    /*margin-left: 250px;*/
+    /*align-items: center;*/
+    /*height: auto;*/
+    /*display: flex;*/
+    /*text-align: center;*/
+}
+.searchStudent_content{
+    border: 2px solid #ffffff;
+    padding: 3rem;
+    border-radius: 3px;
+    /*box-shadow: 2px 1px 2px 5px #D4D7DA;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 25px;
+    display: flex;
+    margin-left: 250px;
+}
+.searchStudent_content th{
+    align-items: center;
+    padding-left: 100px;
+}
+.searchStudent_content td{
+    padding-left: 100px;
+}
+.searchBar{
+    margin-bottom: 10px;
+    margin-top: 100px;
+    margin-left: 300px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 300px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.search_student_class{
+    font-size: 25px;
+    padding: .1rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 300px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 170px;
+    margin-left: 10px;
+}
+.function_title{
+    background-color: lightcoral;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    font-size: 25px;
+    height: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    position: sticky;
+    top: 0;
+    margin-left: 250px ;
+
+}
+.class_picker{
+    margin-left: 300px;
+}
+.add_std_class_btn{
+    margin-left: 300px;
+}
+
+.show_students_create_class input{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 240px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 0px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.show_students_create_class{
+    display: flex;
+    gap: 70px;
+}
+.form_note{
+    margin-left: 250px;
+    font-size: 25px;
+}
+.form_note th{
+    padding: .5rem 1rem;
+    width: 295px;
+}
+
+.select_content input{
+    font-size: 25px;
+    padding: .1rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 300px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 170px;
+}
+.select_content{
+    margin-left: 300px;
+}
+.select_section{
+    margin-left: 10px;
+    display: inline-block;
+}
+.studentScore_content input{
+    font-size: 25px;
+    padding: .1rem;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 300px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 0.5px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 150px;
+}
+.studentScore_content{
+}
