@@ -6,8 +6,11 @@ import {Link, Navigate} from "react-router-dom";
 import axios from 'axios'
 function AddStudents(props) {
     // <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    var currentTime = new Date()
+    var year = currentTime.getFullYear()
     const { id, placeHolder } = props;
     const [student, setStudent] = useState({
+        id: '',
         name: '',
         gender: '',
         dob: '',
@@ -28,20 +31,31 @@ function AddStudents(props) {
         setStudent({...student, [e.target.name]: e.target.value})
     }
     const handleDob = (e) => {
+        const dateFormated = formatDateToDisplay(e.target.value)
         setStudent({...student, [e.target.name]: e.target.value})
     }
     const addStudent = (e) => {
-        console.log('submitted')
         e.preventDefault()
 
-        const data = {
-            name: student.name,
-            gender: student.gender,
-            email: student.email,
-            address: student.address
-        }
+        let fdata = new FormData()
+        fdata.append("id", 1)
+        fdata.append("name", student.name)
+        fdata.append("gender", student.gender)
+        fdata.append("dob", student.dob)
+        fdata.append("email", student.email)
+        fdata.append("address", student.address)
+        axios.post('http://localhost:8000/index.php', fdata)
+            .then(response => {
+                let ans = confirm("submitted")
+                if(ans){
+                    setCancel(true)
+                }
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
 
-        // axios.post().then()
     }
     const [cancel, setCancel] = useState(false)
     const handleCancel = () => {
@@ -63,6 +77,12 @@ function AddStudents(props) {
             <Navigate to= '/functions' />
         )
     }
+    const formatDateToDisplay = (dateString) => {
+        if (!dateString) return '';
+        const [year, month, day] = dateString.split('-');
+        return `${day}-${month}-${year}`;
+    };
+
     return (
         <>
             <NavBar/>
@@ -70,7 +90,8 @@ function AddStudents(props) {
                 <p>Thêm học sinh</p>
             </div>
             <div className='form_container'>
-                <form onSubmit={addStudent}>
+                <form onSubmit={addStudent}
+                method='post'>
                 <div className='form_content'>
                     <div className='form_item'>
                         <p>Họ và Tên</p>
@@ -78,20 +99,33 @@ function AddStudents(props) {
                                value={student.name}/>
                     </div>
                     <div className='form_item'>
-                        <p>Gioi tinh</p>
+                        <p>Giới tính</p>
                         <input placeholder="Nam" list="opts" onChange={(e) => handleGender(e)} name='gender'
                                value={student.gender}/>
                         <datalist id="opts">
                             <option value='male'>Nam</option>
-                            <option value='femal'>Nu</option>
+                            <option value='female'>Nữ</option>
                             <option value='other'>Khac</option>
                         </datalist>
                     </div>
                     <div className='form_item'>
-                        <p>Ngay sinh</p>
-                        <input className='date_time' placeholder='Ngay sinh' type='date'
-                               onFocus={(e) => (e.target.type = "date")} onBlur={(e) => (e.target.type = "text")}
-                               value={student.dob} name='dob' onChange={(e) => handleDob(e)}/>
+                        <p>Ngày sinh</p>
+                        <input
+                            className='date_time'
+                            placeholder='Ngay sinh'
+                            type='text'
+                            onFocus={(e) => {
+                                e.target.type = 'date';
+                                e.target.value = student.dob; // Set the value to yyyy-mm-dd format when focused
+                            }}
+                            onBlur={(e) => {
+                                e.target.type = 'text';
+                                e.target.value = formatDateToDisplay(student.dob); // Display in dd-mm-yyyy format when not focused
+                            }}
+                            value={formatDateToDisplay(student.dob)} // Display in dd-mm-yyyy format by default
+                            name='dob'
+                            onChange={(e) => handleDob(e)}
+                        />
                     </div>
                     <div className='form_item'>
                         <p>Email</p>
@@ -99,8 +133,9 @@ function AddStudents(props) {
                                value={student.email}/>
                     </div>
                     <div className='form_item'>
-                        <p>Dia chi</p>
-                        <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => handleAddress(e)} name='address'
+                        <p>Địa chỉ</p>
+                        <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => handleAddress(e)}
+                               name='address'
                                value={student.address}/>
                         {/*<p><span className="textarea" role="textbox" contentEditable></span></p>*/}
                     </div>

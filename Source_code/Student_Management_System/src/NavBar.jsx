@@ -13,6 +13,7 @@ import {SlackOutlined} from "@ant-design/icons";
 import {LogoutOutlined} from "@ant-design/icons";
 import { LuLogOut } from "react-icons/lu";
 function NavBar(){
+
     return(
         <>
             <nav className='navBar'>
