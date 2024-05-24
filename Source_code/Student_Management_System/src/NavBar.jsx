@@ -1,6 +1,6 @@
 import Nav from 'react-bootstrap/Nav';
-import {Navigate} from "react-router-dom";
-import {useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
+import {useContext, useState} from "react";
 import login from "./login-signup/login.jsx";
 import {Link} from "react-router-dom";
 import React from "react";
@@ -12,8 +12,19 @@ import {OpenAIOutlined} from "@ant-design/icons";
 import {SlackOutlined} from "@ant-design/icons";
 import {LogoutOutlined} from "@ant-design/icons";
 import { LuLogOut } from "react-icons/lu";
-function NavBar(){
 
+import {NULL} from "mysql/lib/protocol/constants/types.js";
+import {MalopContext} from "./MalopContext.jsx";
+import {UserRole} from "./UserRoleContext.jsx";
+
+function NavBar(){
+    const navigate = useNavigate();
+    const { setMalopgv } = useContext(MalopContext);
+    const { setuserrole } = useContext(UserRole);
+    const handleLogout = () => {
+        setMalopgv(null)
+        setuserrole(null)
+    }
     return(
         <>
             <nav className='navBar'>
@@ -32,7 +43,7 @@ function NavBar(){
                     </li>
                     <li className='logout_btn'>
                         <LuLogOut id='icons'/>
-                        <Link to='/' id='title'>Log out</Link>
+                        <Link to='/' id='title' onClick={handleLogout}>Log out</Link>
                     </li>
                 </ul>
             </nav>

@@ -98,23 +98,93 @@
 
 import React from "react";
 import {HTMLInputTypeAttribute} from "react";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
 import {Data} from "../data.jsx";
 import axios from "axios";
+import {MalopContext} from "../MalopContext.jsx";
+import {UserRole} from "../UserRoleContext.jsx";
 
-const CreateClass = () => {
-    const [students, setStudents] = useState([]);
+
+
+const CreateClass = (props) => {
+    const { malopgv } = useContext(MalopContext);
+    const { userrole } = useContext(UserRole);
     const [limit, setLimit] = useState([0,10])
-    const [std, setStd] = useState([]) //store value of students
-    const [filteredStudents, setFilteredStudents] = useState([])
     const [search, setSearch] = useState('')
     const [siso, setSiso] = useState(1)
     const [assignClass, setAssignClass] = useState([]);
     const [fetchdata, setFetchdata] = useState([])
+    const [fetchdataSiSo, setFetchdataSiSo] = useState([])
+    const [noclass, setNoclass] = useState()
+    const [fetchnoclass, setFetchnoclass] = useState([])
+    const [studentID, setStudentID] = useState()
+    const [checkedStates, setCheckedStates] = useState({});
+    const [menuVisible, setMenuVisible] = useState(false)
+
+    const handleChange = async (id) => {
+        let fdata = new FormData()
+        fdata.append("class", search)
+        fetch('http://localhost:8000/SearchSiSoLop.php', {method: 'POST', body: fdata})
+            .then(response => response.json())
+            .then(data => setFetchdataSiSo(data))
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        try {
+            const response = await fetch('http://localhost:8000/index.php', {method: 'POST', body: fdata});
+            const data = await response.json();
+            setFetchdata(data);
+            const currentStudentsCount = data.length;
+            if (currentStudentsCount < fetchdataSiSo || checkedStates[id]) {
+                const newCheckedStates = {
+                    ...checkedStates,
+                    [id]: !checkedStates[id]
+                };
+                setCheckedStates(newCheckedStates);
+
+                if (!checkedStates[id]) {
+                    onTick(id);
+                } else {
+                    onUntick(id)
+                }
+            } else {
+                alert('full hoc sinh')
+            }
+        }catch (error) {
+            console.error('errors', error);
+        }
+    };
+    const onTick = (id) => {
+        // e.preventDefault()
+        let fdata = new FormData()
+        fdata.append('id', id );
+        fdata.append('MALOP', search);
+        axios.post('http://localhost:8000/Update.php', fdata)
+            .then(response => {
+                console.log(response.data);
+
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    };
+    const onUntick = (id) => {
+        // e.preventDefault()
+        let fdata = new FormData()
+        fdata.append('id', id);
+        fdata.append('MALOP', '0');
+        axios.post('http://localhost:8000/Update.php', fdata)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    };
+
     const handleSearch = (e) => {
-        setSearch(e.target.value)
         let fdata = new FormData()
             fdata.append("class", search)
             fetch('http://localhost:8000/index.php', {method: 'POST', body: fdata})
@@ -123,33 +193,17 @@ const CreateClass = () => {
                 .catch(error => {
                     console.error('There was an error!', error);
                 });
+            fetch('http://localhost:8000/SearchSiSoLop.php', {method: 'POST', body: fdata})
+            .then(response => response.json())
+            .then(data => setFetchdataSiSo(data))
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     }
-    const addRow = () => {
-        const newRows = Array.from({ length: siso }, (_, index) => ({
-            id: '',
-            name: '',
-            gender: '',
-            dob: '',
-            address: ''
-        }));
-        setAssignClass([...assignClass, ...newRows]);
-    };
-
-    const handleInputChange = (index, e) => {
-        const { name, value } = e.target;
-        const newSt = [...assignClass];
-        newSt[index][name] = value;
-        setAssignClass(newSt);
-    };
     const handleSiSo = (e) => {
         setSiso(e.target.value)
     }
-    const removeRow = (index) => {
-        const newDynamicRows = assignClass.filter((_, i) => i !== index);
-        setAssignClass(newDynamicRows);
-    };
     const createClass = (e) => {
-        console.log(typeof search)
         e.preventDefault()
         let fdata = new FormData()
         assignClass.forEach((student) => {
@@ -164,8 +218,39 @@ const CreateClass = () => {
                 });
         })
     }
+    useEffect(() => {
+        if (search) {
+            handleSearch();
+        }
+    }, [search]);
+    // useEffect(() => {
+    //     if (noclass == 0) {
+    //         let fdata = new FormData()
+    //         fdata.append("class", noclass)
+    //         fetch('http://localhost:8000/index.php', {method: 'POST', body: fdata})
+    //             .then(response => response.json())
+    //             .then(data => setFetchnoclass(data))
+    //             .catch(error => {
+    //                 console.error('There was an error!', error);
+    //             });
+    //     }
+    // }, [noclass]);
+    const handleCheckEmpty = () => {
+        // setNoclass(0)
+        setMenuVisible(true)
+    let fdata = new FormData()
+    fdata.append("class", 0)
+    fetch('http://localhost:8000/index.php', {method: 'POST', body: fdata})
+        .then(response => response.json())
+        .then(data => setFetchnoclass(data))
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
 
-
+    }
+    const hideMenu = () => {
+        setMenuVisible(false)
+    }
     return (
         <>
             <NavBar/>
@@ -175,23 +260,74 @@ const CreateClass = () => {
             <div className='select_container'>
                 <div className='select_content'>
                     <div className='select_section'>
-                        <input className='' placeholder="Chon lop" list="classOpts"
-                                  onChange={(e) => handleSearch(e)} name='class_picker'/>
-                            <datalist id="classOpts">
-                                <option value='10CA'>10CA</option>
-                                <option value='10A1'>10A1</option>
-                                <option value='10A2'>10A2</option>
-                                <option value='10A3'>10A3</option>
-                                <option value='10A4'>10A4</option>
-                                <option value='11A1'>11A1</option>
-                                <option value='11A2'>11A2</option>
-                                <option value='11A3'>11A3</option>
-                                <option value='12A1'>12A1</option>
-                                <option value='12A2'>12A2</option>
-                            </datalist>
-                        <button type="button" onClick={addRow}>Add Row</button>
-                        <input className='' placeholder="Si so"
-                               onChange={(e) => handleSiSo(e)} name='class_number'/>
+                        <select className='search_student_class' id="opts"
+                                onChange={(e) => setSearch(e.target.value)}
+                                value={search}>
+
+                            {userrole == "admin" ?
+                                (<>
+                                    <option value=''>Chon lop</option>
+                                    <option value='10A1'>10A1</option>
+                                    <option value='10A2'>10A2</option>
+                                    <option value='10A3'>10A3</option>
+                                    <option value='10A4'>10A4</option>
+                                    <option value='11A1'>11A1</option>
+                                    <option value='11A2'>11A2</option>
+                                    <option value='11A3'>11A3</option>
+                                    <option value='12A1'>12A1</option>
+                                    <option value='12A2'>12A2</option>
+                                </>)
+                                :
+                                (
+                                    <>
+                                        <option value=''>Chon lop</option>
+                                        <option value={malopgv}>{malopgv}</option>
+                                    </>
+                                )
+                            }
+                        </select>
+                        <div className='siso search_student_class'>{fetchdataSiSo}</div>
+                        <button className="Copen" onClick={handleCheckEmpty}>Add HS</button>
+
+                        {menuVisible && (
+                            <div className="dim">
+                                <div className="classless">
+                                    <div className="classlessTitle">DANH SÁCH HỌC SINH CHƯA CÓ LỚP</div>
+                                    <div className="classlessBox">
+                                        <table className='Ctitle'>
+                                            <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên</th>
+                                                <th>Gioi tinh</th>
+                                                <th>Nam sinh</th>
+                                                <th>Dia chi</th>
+                                                <th>Ghi chu</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody className="Cbody">
+                                            {fetchnoclass.map((student) => (
+                                                <tr key={student.ID_HOCSINH}>
+                                                    <td>{student.ID_HOCSINH}</td>
+                                                    <td>{student.HOTEN}</td>
+                                                    <td>{student.GIOI_TINH}</td>
+                                                    <td>{student.NGAY_SINH}</td>
+                                                    <td>{student.DIACHI}</td>
+                                                    <input type='checkbox'
+                                                           checked={!!checkedStates[student.ID_HOCSINH]}
+                                                           onChange={() => {
+                                                               handleChange(student.ID_HOCSINH)
+                                                           }}
+                                                    />
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button className="Cclose" onClick={hideMenu}>Done</button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -210,61 +346,13 @@ const CreateClass = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {search.length >0 && fetchdata.map(student => (
-                                <tr key={student.id}>
-                                    <td>{student.id}</td>
-                                    <td>{student.NAME}</td>
-                                    <td>{student.GENDER}</td>
-                                    <td>{student.DOB}</td>
-                                    <td>{student.ADDRESS}</td>
-
-                                </tr>
-                            ))}
-                            {search.length >0 && assignClass.map((row, index) => (
-                                <tr key={row.index}>
-                                    <td>
-                                        <input
-                                            type="number"
-                                            name='id'
-                                            value={row.id}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            value={row.name}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="gender"
-                                            value={row.gender}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="dob"
-                                            value={row.dob}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            name="address"
-                                            value={row.address}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button type="button" onClick={() => removeRow(index)}>Remove</button>
-                                    </td>
+                            {search.length > 0 && fetchdata.map((student) => (
+                                <tr key={student.ID_HOCSINH}>
+                                    <td>{student.ID_HOCSINH}</td>
+                                    <td>{student.HOTEN}</td>
+                                    <td>{student.GIOI_TINH}</td>
+                                    <td>{student.NGAY_SINH}</td>
+                                    <td>{student.DIACHI}</td>
                                 </tr>
                             ))}
                             </tbody>

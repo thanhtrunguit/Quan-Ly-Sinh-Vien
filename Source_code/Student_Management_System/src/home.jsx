@@ -1,8 +1,10 @@
-import {Navigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {useState} from "react";
 import NavBar from "./NavBar.jsx";
-function Home(){
+import Login from "./login-signup/login.jsx";
+function Home({ isLoggedIn }){
     const [logout, setLogout] = useState(false)
+    const location = useLocation();
 
     const handleClick = () =>
     {
@@ -21,7 +23,7 @@ function Home(){
                 <NavBar/>
                 <div className='home_container'>
                     <div className='home_content'>
-                        <p>home </p>
+                        <p>Status: {isLoggedIn ? 'Logged In' : 'Logged Out'}</p>
                         <button onClick={handleClick}>Log out</button>
                     </div>
                 </div>

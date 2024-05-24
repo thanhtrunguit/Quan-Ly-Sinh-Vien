@@ -38,13 +38,13 @@ function AddStudents(props) {
         e.preventDefault()
 
         let fdata = new FormData()
-        fdata.append("id", 1)
+        // fdata.append("id", )
         fdata.append("name", student.name)
         fdata.append("gender", student.gender)
         fdata.append("dob", student.dob)
         fdata.append("email", student.email)
         fdata.append("address", student.address)
-        axios.post('http://localhost:8000/index.php', fdata)
+        axios.post('http://localhost:8000/themhsvippro.php', fdata)
             .then(response => {
                 let ans = confirm("submitted")
                 if(ans){

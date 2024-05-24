@@ -379,9 +379,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     width: 150px;
 }
-.studentScore_content{
-}
-
 
 .checkStudentNoClass{
     margin-left: 30px;
@@ -402,3 +399,158 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .submit_btn_createClass{
     margin-left: 300px;
 }
+
+.frItems{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: 250px;
+}
+
+.frItems p{
+    text-align: center;
+    /*margin-top: -10px;*/
+}
+
+.search_sem{
+    margin-bottom: 10px;
+    margin-top: 60px;
+    margin-left: 300px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 150px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.searchSem_content{
+    border: 2px solid #ffffff;
+    padding: 3rem;
+    border-radius: 3px;
+    /*box-shadow: 2px 1px 2px 5px #D4D7DA;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 25px;
+    display: flex;
+    margin-left: 250px;
+}
+.searchSem_content th{
+    align-items: center;
+    padding-left: 100px;
+}
+.searchSem_content td{
+    padding-left: 100px;
+}
+
+.search_sub{
+    font-size: 25px;
+    padding: .1rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 150px;
+    margin-left: 10px;
+}
+
+.classless{
+    align-items: center;
+    justify-content: center;
+    width: 1200px;
+    height: auto;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    transform: translate(15%);
+    z-index: 1000;
+    position: fixed;
+    top: 50%; /* Move the box down by 50% of the viewport height */
+    left: 50%; /* Move the box right by 50% of the viewport width */
+    transform: translate(-50%, -50%);
+}
+.Ctitle{
+    font-size: 25px;
+}
+.Ctitle th{
+    padding: .5rem 1rem;
+    width: 295px;
+}
+.classlessTitle{
+    text-align: center;
+    padding: .5rem 1rem;
+    font-size: 25px;
+}
+.Cbody td{
+    text-align: center;
+    padding: .5rem 1rem;
+    width: 295px;
+}
+
+.Copen{
+    background: none;
+    cursor: pointer;
+    padding: .5rem 1rem;
+    font-size: 1.171875rem;
+    line-height: 1.5;
+    border-radius: .3rem;
+    font-weight: 400;
+    border: 1px solid #0f6cbf;
+    color: #fff;
+    background-color: #0f6cbf;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.Cclose{
+    background: none;
+    cursor: pointer;
+    padding: .5rem 1rem;
+    font-size: 1.171875rem;
+    line-height: 1.5;
+    border-radius: .3rem;
+    font-weight: 400;
+    border: 1px solid #0f6cbf;
+    color: #fff;
+    background-color: #0f6cbf;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+
+
+.dim{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value (0.5) for the desired opacity */
+    z-index: 999; /* Ensure the overlay appears above other content */
+}
+
+.siso{
+    border: 1px solid #8f959e;
+    width: 50px;
+    display: inline-block;
+    padding: .5rem 1rem;
+    margin-top: 2px;
+    height: 42px;
+    text-decoration: none;
+    font-size: 25px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+}
+

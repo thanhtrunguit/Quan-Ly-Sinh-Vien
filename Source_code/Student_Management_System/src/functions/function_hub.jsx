@@ -23,6 +23,8 @@ function Functions() {
                 <Link to ='/studentSearch' className='box item3'><p>Tra cuu hoc sinh</p><FaSearchDollar className='function_icons'/> </Link>
                 <Link to ='/subjectScore' className='box item4'><p>Nhap bang diem</p><FaRegPenToSquare className='function_icons'/> </Link>
                 <Link to = '/finalReport' className='box item5'><p>Báo cáo tổng kết</p><GrScorecard className='function_icons'/> </Link>
+                <Link to = '/adminFunctions' className='box item5'><p>admin</p><GrScorecard className='function_icons'/> </Link>
+
             </div>
         </>
 

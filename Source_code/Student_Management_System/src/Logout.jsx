@@ -14,7 +14,7 @@ function Login({ setIsLoggedIn }){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [userrole, setUserrole] = useState('')
-    const [malopgv, setMalopgV] = useState('')
+    // const [malopgv, setMalopgv] = useState('')
     const navigate = useNavigate();
     const { setMalopgv } = useContext(MalopContext);
     const { setuserrole } = useContext(UserRole);
@@ -24,16 +24,29 @@ function Login({ setIsLoggedIn }){
     const handleLogin = (e) => {
         e.preventDefault()
         let fdata = new FormData()
-        fdata.append("username", 'admin')
-        fdata.append("password", 'password')
-        // fdata.append("username", username)
-        // fdata.append("password", password)
+        // fdata.append("username", '10a2@gmail.com')
+        // fdata.append("password", '10a2')
+        fdata.append("username", username)
+        fdata.append("password", password)
         fetch('http://localhost:8000/login.php', {method: 'POST', body: fdata})
             .then(response => response.json())
             .then(data => {
                 setUserrole(data)
                 setuserrole(data)
+                if (userrole) {
+                    let fdata1 = new FormData()
+                    fdata1.append("username", username)
+                    // fdata1.append("username", '10a2@gmail.com')
+                    fetch('http://localhost:8000/MALOP_get.php', {method: 'POST', body: fdata1})
+                        .then(response => response.json())
+                        .then(data => setMalopgv(data)
+                        )
+                        .catch(error => {
+                            console.error('wrong2!');
+                        });
+                }
                 setIsLoggedIn(true)
+                navigate('/home', { state: { isLoggedIn: true } });
             })
             .catch(error => {
                 console.error('wrong!');
@@ -41,25 +54,7 @@ function Login({ setIsLoggedIn }){
 
 
     }
-    useEffect(() => {
-        if (userrole === 'users') {
-            let fdata1 = new FormData()
-            fdata1.append("username", username)
-            fetch('http://localhost:8000/MALOP_get.php', {method: 'POST', body: fdata1})
-                .then(response => response.json())
-                .then(data => {
-                    setMalopgv(data)
-                    navigate('/home', { state: { isLoggedIn: true } });
-                    }
-                )
-                .catch(error => {
-                    console.error('wrong2!');
-                });
-        }
-        if (userrole === 'admin') {
-            navigate('/home', { state: { isLoggedIn: true } });
-        }
-    });
+
 
     return (
         <>
@@ -73,8 +68,8 @@ function Login({ setIsLoggedIn }){
                                    value={username}
                             /> <br/>
                             <input onChange={(e) => setPassword(e.target.value)} placeholder="password"
-                               value={password}
-                                   // type='password'
+                                   value={password}
+                                // type='password'
                             /> <br/>
                             <button className='btn login_btn' type='submit'>Login</button>
                             <Link to='/password_retrieve' className='password_forgot'>Forgot your password?</Link>

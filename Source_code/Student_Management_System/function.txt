@@ -1,0 +1,34 @@
+            <button className="Copen" onClick={showMenu}>Add HS</button>
+            </div>
+            {menuVisible && (
+            <div className="dim">
+            <div className="classless">
+                <div className="classlessTitle">DANH SÁCH HỌC SINH CHƯA CÓ LỚP</div>
+                <div className="classlessBox"> 
+                    <table className='Ctitle'>
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên</th>
+                            <th>Gioi tinh</th>
+                            <th>Nam sinh</th>
+                            <th>Dia chi</th>
+                            <th>Ghi chu</th>
+                        </tr>
+                    </thead>
+                    <tbody className = "Cbody">
+                        <tr>
+                            <td>1</td>
+                            <td>thanh trump</td>
+                            <td>nu</td>
+                            <td>6969</td>
+                            <td>abcs</td>
+                            <td>cc</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <button className="Cclose" onClick={hideMenu}>Done</button>
+            </div>
+            </div>
+            )}
