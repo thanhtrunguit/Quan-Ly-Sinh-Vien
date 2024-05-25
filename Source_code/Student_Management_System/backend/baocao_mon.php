@@ -17,13 +17,19 @@ $result_hocky = mysqli_query($conn, $sql_get_hocky);
 $row_hocky = mysqli_fetch_assoc($result_hocky);
 $id_hocky = $row_hocky['ID_HOCKY'];
 
+$diem_dat_hocky = "SELECT GIATRI_THAMSO FROM THAM_SO WHERE TEN_THAMSO = '$subject'";
+$diemdat = mysqli_query($conn, $diem_dat_hocky);
+
+$row_hocky = mysqli_fetch_assoc($diemdat);
+$diemdat = $row_hocky['GIATRI_THAMSO'];
+
 $sql_report = "SELECT LOP.ID_LOP, lop.SISO,
-SUM(CASE WHEN chi_tiet_diem.DIEM_TB >= 5 THEN 1 ELSE 0 END) AS 'SO_LUONG_DAT',
-ROUND(SUM(CASE WHEN chi_tiet_diem.DIEM_TB >= 5 THEN 1 ELSE 0 END) / count(HOCSINH.ID_HOCSINH) * 100, 2) AS 'TI_LE_DAT'
+SUM(CASE WHEN chi_tiet_diem.DIEM_TB >= '$diemdat' THEN 1 ELSE 0 END) AS 'SO_LUONG_DAT',
+ROUND(SUM(CASE WHEN chi_tiet_diem.DIEM_TB >= '$diemdat' THEN 1 ELSE 0 END) / count(HOCSINH.ID_HOCSINH) * 100, 2) AS 'TI_LE_DAT'
 FROM lop
 INNER JOIN HOCSINH ON lop.ID_LOP = HOCSINH.ID_LOP
 INNER JOIN chi_tiet_diem ON HOCSINH.ID_HOCSINH = chi_tiet_diem.ID_HOCSINH
-WHERE chi_tiet_diem.ID_MONHOC = '$subject' AND chi_tiet_diem.ID_HOCKY = '$id_hocky'
+WHERE chi_tiet_diem.ID_MONHOC = '$subject' AND chi_tiet_diem.ID_HOCKY = '$id_hocky' and HOCSINH.ID_LOP <> 0
 GROUP BY lop.ID_LOP, lop.SISO";
 
 $result_report = mysqli_query($conn, $sql_report);

@@ -9,6 +9,7 @@ $conn = "";
 $conn = mysqli_connect($db_server, $db_username, $db_password, $db_name);
 
 $ten_hocsinh = $_POST['name'];
+
 $year = $_POST['NAM'];
 $MAHOCKY1 = "SELECT ID_HOCKY FROM HOC_KY WHERE HOC_KY = '1' AND NAM_HOC = '$year'";
 $resulthk1 = mysqli_query($conn, $MAHOCKY1);
@@ -19,7 +20,6 @@ $MAHOCKY2 = "SELECT ID_HOCKY FROM HOC_KY WHERE HOC_KY = '2' AND NAM_HOC = '$year
 $resulthk2 = mysqli_query($conn, $MAHOCKY2);
 $rowhk = mysqli_fetch_assoc($resulthk2);
 $mahk2 = $rowhk['ID_HOCKY'];
-
 
 $sql = "SELECT HOCSINH.HOTEN, HOCSINH.ID_HOCSINH, LOP.ID_LOP,
         (SELECT avg(DIEM_TB) FROM CHI_TIET_DIEM CD1 WHERE CD1.ID_HOCSINH = HOCSINH.ID_HOCSINH AND CD1.ID_HOCKY = '$mahk1') AS TBHK1,

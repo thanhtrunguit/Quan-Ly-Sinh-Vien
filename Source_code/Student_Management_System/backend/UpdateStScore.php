@@ -27,16 +27,19 @@ $id_hocky = $row_hocky['ID_HOCKY'];
 $MAMON_check = "SELECT * FROM CHI_TIET_DIEM WHERE ID_HOCSINH = '$id' AND ID_MONHOC = '$mamon' AND ID_HOCKY = '$id_hocky'";
 $result = mysqli_query($conn, $MAMON_check);
 
-if ($result->num_rows > 0) {
-    $sql = "UPDATE CHI_TIET_DIEM
+if (mysqli_num_rows($result) > 0) {
+    if($score15 != "" && $score45 != "" && $scoretb != "")
+    {
+        $sql = "UPDATE CHI_TIET_DIEM
                   SET DIEM_15P = '$score15', DIEM_45P = '$score45', DIEM_TB = '$scoretb'
                   WHERE ID_HOCSINH = '$id' AND ID_MONHOC = '$mamon' AND ID_HOCKY = '$id_hocky'";
-    mysqli_query($conn, $sql);
+        mysqli_query($conn, $sql);
+    }
 
 } else {
-    $sql = "INSERT INTO CHI_TIET_DIEM (`ID_HOCSINH`, `ID_MONHOC`, `ID_HOCKY`, `DIEM_15P`, `DIEM_45P`, `DIEM_TB`)
+        $sql = "INSERT INTO CHI_TIET_DIEM (`ID_HOCSINH`, `ID_MONHOC`, `ID_HOCKY`, `DIEM_15P`, `DIEM_45P`, `DIEM_TB`)
              VALUES ('$id', '$mamon', '$id_hocky', '$score15', '$score45', '$scoretb')";
-    mysqli_query($conn, $sql);
+        mysqli_query($conn, $sql);
 }
 
 mysqli_close($conn);

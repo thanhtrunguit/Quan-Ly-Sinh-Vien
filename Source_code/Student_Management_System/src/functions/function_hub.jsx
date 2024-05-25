@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useState} from "react";
 import {Link, Navigate} from "react-router-dom";
 import NavBar from "../NavBar.jsx";
@@ -7,7 +7,10 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { FaSearchDollar } from "react-icons/fa";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { GrScorecard } from "react-icons/gr";
+import {UserRole} from "../UserRoleContext.jsx";
+
 function Functions() {
+    const { userrole } = useContext(UserRole);
     const handleClick = () => {
         console.log('hello')
     }
@@ -23,7 +26,18 @@ function Functions() {
                 <Link to ='/studentSearch' className='box item3'><p>Tra cuu hoc sinh</p><FaSearchDollar className='function_icons'/> </Link>
                 <Link to ='/subjectScore' className='box item4'><p>Nhap bang diem</p><FaRegPenToSquare className='function_icons'/> </Link>
                 <Link to = '/finalReport' className='box item5'><p>Báo cáo tổng kết</p><GrScorecard className='function_icons'/> </Link>
-                <Link to = '/adminFunctions' className='box item5'><p>admin</p><GrScorecard className='function_icons'/> </Link>
+                {userrole === 'admin' ?
+                        (
+                            <>
+                                <Link to='/adminFunctions' className='box item5'><p>admin</p><GrScorecard
+                                className='function_icons'/> </Link>
+                            </>
+                        )
+                        :
+                        (
+                            <></>
+                        )
+                }
 
             </div>
         </>

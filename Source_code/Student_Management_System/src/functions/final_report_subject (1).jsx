@@ -1,6 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {useState} from "react";
 import NavBar from "../NavBar.jsx";
+import {MalopContext} from "../MalopContext.jsx";
+import {UserRole} from "../UserRoleContext.jsx";
 
 function FinalReportSub() {
     const [students, setStudents] = useState([]);
@@ -9,6 +11,8 @@ function FinalReportSub() {
     const [yearPicker, setYearPicker ] = useState('')
     const [hockyPicker, setHockyPicker] = useState('')
     const [fetchdata, setFetchdata] = useState([])
+    const { malopgv } = useContext(MalopContext);
+    const { userrole } = useContext(UserRole);
     const handleSearch = () => {
         let fdata = new FormData()
         fdata.append("SUBJECT", subjectPicker)
@@ -31,6 +35,13 @@ function FinalReportSub() {
             handleSearch();
         }
     }, [subjectPicker, hockyPicker, yearPicker]);
+    const [listOfSubs, setListOfSubs] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8000/MAMON_get.php')
+            .then(response => response.json())
+            .then(data => setListOfSubs(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
     return (
         <>
         <NavBar/>
@@ -60,40 +71,42 @@ function FinalReportSub() {
                     </div>
 
                     <div className='select_section'>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSubjectPicker(e.target.value)}
                                 value={subjectPicker}>
-                            <option value=''>Chon mon</option>
-                            <option value='1'>Toan</option>
-                            <option value='2'>Ly</option>
-                            <option value='3'>Hoa</option>
-                            <option value='4'>Sinh</option>
-                            <option value='7'>Su</option>
-                            <option value='8'>Dia</option>
-                            <option value='6'>Van</option>
-                            <option value='10'>Dao duc</option>
-                            <option value='12'>The duc</option>
+                            <option value="">Chon Mon</option>
+                            {
+                                listOfSubs.length > 0 ? (
+                                    listOfSubs.map((className, index) => (
+                                        <option key={index} value={className.ID_MONHOC}>
+                                            {className.TEN_MONHOC}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                         </select>
                     </div>
                 </div>
 
-                    <div className='studentScore_container score_container'>
-                        <div className='studentScore_content searchStudent_content'>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th id='class'>Lớp</th>
-                                    <th id='csize'>Sĩ số</th>
-                                    <th id='qual'>Số lượng đạt</th>
-                                    <th id='qualpercent'>Tỉ lệ</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {subjectPicker&& hockyPicker&&yearPicker &&fetchdata.map((student,index) => (
-                                    <tr key={index}>
-                                        <td>{student.ID_LOP}</td>
-                                        <td>{student.SISO}</td>
-                                        <td>{student.SO_LUONG_DAT}</td>
+                <div className='studentScore_container score_container'>
+                    <div className='studentScore_content searchStudent_content'>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th id='class'>Lớp</th>
+                                <th id='csize'>Sĩ số</th>
+                                <th id='qual'>Số lượng đạt</th>
+                                <th id='qualpercent'>Tỉ lệ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {subjectPicker && hockyPicker && yearPicker && fetchdata.map((student, index) => (
+                                <tr key={index}>
+                                    <td>{student.ID_LOP}</td>
+                                    <td>{student.SISO}</td>
+                                    <td>{student.SO_LUONG_DAT}</td>
                                         <td>{student.TI_LE_DAT}</td>
 
                                     </tr>

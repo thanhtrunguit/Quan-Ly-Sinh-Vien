@@ -194,6 +194,20 @@ body{
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
 }
+.form_content select{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 500px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    border: 0.5px solid #8f959e;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+
 .form_item{
     padding: .1rem;
 }
@@ -206,21 +220,19 @@ body{
     margin: 0;
     font-size: 25px;
     font-weight: lighter;
-
-
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
-}
+/*input[type="date"]::-webkit-calendar-picker-indicator {*/
+/*    background: transparent;*/
+/*    bottom: 0;*/
+/*    color: transparent;*/
+/*    cursor: pointer;*/
+/*    height: auto;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    top: 0;*/
+/*    width: auto;*/
+/*}*/
 
 
 /*home_section*/
@@ -552,5 +564,164 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     align-content: center;
     justify-content: center;
     padding: 10px;
+}
+.btnA{
+    background: none;
+    cursor: pointer;
+    padding: .25rem .5rem;
+    font-size: 1rem;
+    border-radius: .3rem;
+    font-weight: 400;
+    border: 1px solid #0f6cbf;
+    color: #fff;
+    background-color: #0f6cbf;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto;
+}
+
+.adminTitle{
+    margin-left: 250px;
+    margin-top: 60px;
+    margin-bottom: 0px;
+    font-size: 25px;
+    padding: 0rem .5rem;
+    height: 5px;
+    text-align: center;
+}
+
+.age_section input{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 80px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 50px;
+}
+.age_section{
+    display: flex;
+    gap: 10px;
+    margin-left: 250px;
+    font-size: 25px;
+    border: 2px solid #ffffff;
+    padding: 2rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 45px;
+    padding: .5rem 1rem;
+}
+
+.class_section input{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 100px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 20px;
+}
+.class_section{
+    display: flex;
+    gap: 10px;
+    margin-left: 250px;
+    font-size: 25px;
+    border: 2px solid #ffffff;
+    padding: 2rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 30px;
+    padding: .5rem 1rem;
+}
+.class_section select{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 150px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 50px;
+}
+
+
+.subject_section input{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 100px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 50px;
+}
+.subject_section{
+    display: flex;
+    gap: 10px;
+    margin-left: 250px;
+    font-size: 25px;
+    border: 2px solid #ffffff;
+    padding: 2rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 45px;
+    padding: .5rem 1rem;
+}
+
+
+.score_section input{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 100px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: 50px;
+}
+.score_section{
+    display: flex;
+    gap: 10px;
+    margin-left: 250px;
+    font-size: 25px;
+    border: 2px solid #ffffff;
+    padding: 2rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 45px;
+    padding: .5rem 1rem;
+    margin-bottom:150px;
+}
+
+.admin_dropdown{
+    font-size: 25px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: lighter;
+    width: 200px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    /*width: auto;*/
+    margin-left: 10px;
+    margin-right: 40px;
+}
+.inputBar{
+
 }
 

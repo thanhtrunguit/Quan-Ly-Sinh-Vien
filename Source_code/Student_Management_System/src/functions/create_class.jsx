@@ -251,6 +251,14 @@ const CreateClass = (props) => {
     const hideMenu = () => {
         setMenuVisible(false)
     }
+    const [listOfClass, setlistOfClass] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:8000/dslop.php')
+            .then(response => response.json())
+            .then(data => setlistOfClass(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
     return (
         <>
             <NavBar/>
@@ -260,33 +268,33 @@ const CreateClass = (props) => {
             <div className='select_container'>
                 <div className='select_content'>
                     <div className='select_section'>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSearch(e.target.value)}
                                 value={search}>
-
-                            {userrole == "admin" ?
-                                (<>
-                                    <option value=''>Chon lop</option>
-                                    <option value='10A1'>10A1</option>
-                                    <option value='10A2'>10A2</option>
-                                    <option value='10A3'>10A3</option>
-                                    <option value='10A4'>10A4</option>
-                                    <option value='11A1'>11A1</option>
-                                    <option value='11A2'>11A2</option>
-                                    <option value='11A3'>11A3</option>
-                                    <option value='12A1'>12A1</option>
-                                    <option value='12A2'>12A2</option>
-                                </>)
-                                :
-                                (
+                            <option value="">Chon Lop</option>
+                            {
+                                listOfClass.length > 0 && userrole == 'admin' ? (
+                                listOfClass.map((className, index) => (
+                                <option key={index} value={className}>
+                            {className}
+                        </option>
+                        ))
+                            ) : (
                                     <>
                                         <option value=''>Chon lop</option>
                                         <option value={malopgv}>{malopgv}</option>
                                     </>
-                                )
-                            }
+                            )}
                         </select>
-                        <div className='siso search_student_class'>{fetchdataSiSo}</div>
+                        
+                        {
+                            search.length > 0 ?
+                                (<div className='siso search_student_class '>{fetchdataSiSo}</div>)
+                                :
+                                (
+                                    <></>
+                                )
+                        }
                         <button className="Copen" onClick={handleCheckEmpty}>Add HS</button>
 
                         {menuVisible && (
@@ -336,7 +344,7 @@ const CreateClass = (props) => {
                       method='post'>
                     <div className='studentScore_content searchStudent_content'>
                         <table>
-                            <thead>
+                        <thead>
                             <tr>
                                 <th>Student Id</th>
                                 <th>Student Name</th>
@@ -359,7 +367,6 @@ const CreateClass = (props) => {
                         </table>
 
                     </div>
-                    <button className='btn login_btn submit_btn submit_btn_createClass' type='submit'>Submit</button>
                 </form>
             </div>
         </>

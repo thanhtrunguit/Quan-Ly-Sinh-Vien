@@ -5,6 +5,7 @@ import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
 import {DiffFilled} from "@ant-design/icons";
 import {Data} from "../data.jsx";
+
 function StudentSearch(props)
 {
     const [searchClass, setSearchClass] = useState('')
@@ -68,6 +69,15 @@ function StudentSearch(props)
         }
     }, [yearPicker]);
 
+    const [listOfClass, setlistOfClass] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:8000/dslop.php')
+            .then(response => response.json())
+            .then(data => setlistOfClass(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
+
     return(
         <>
             <NavBar/>
@@ -79,29 +89,30 @@ function StudentSearch(props)
                    name='searchStudent'
                    value={search}
             />
-            <select className='search_student_class' id="opts"
+            <select className='search_student_class'
                     onChange={(e) => setSearchClass(e.target.value)}
                     value={searchClass}>
-                <option value=''>Chon lop</option>
-                <option value='10CA'>10CA</option>
-                <option value='10A1'>10A1</option>
-                <option value='10A2'>10A2</option>
-                <option value='10A3'>10A3</option>
-                <option value='10A4'>10A4</option>
-                <option value='11A1'>11A1</option>
-                <option value='11A2'>11A2</option>
-                <option value='11A3'>11A3</option>
-                <option value='12A1'>12A1</option>
-                <option value='12A2'>12A2</option>
+                <option value="">Chon Lop</option>
+                {
+                    listOfClass.length > 0 ? (
+                        listOfClass.map((className, index) => (
+                            <option key={index} value={className}>
+                                {className}
+                            </option>
+                        ))
+                    ) : (
+                        <>
+                        </>
+                    )}
             </select>
             <div className='select_section'>
                 <select className='search_student_class' id="opts"
                         onChange={(e) => setYearPicker(e.target.value)}
                         value={yearPicker}>
-                    <option value=''>Chon nam</option>
-                    <option value='2021'>2021</option>
-                    <option value='2022'>2022</option>
-                    <option value='2023'>2023</option>
+                    <option value=''>Năm</option>
+                    <option value='2021'>2021-2022</option>
+                    <option value='2022'>2022-2023</option>
+                    <option value='2023'>2023-2024</option>
                 </select>
             </div>
             <div className='searchStudent_container'>

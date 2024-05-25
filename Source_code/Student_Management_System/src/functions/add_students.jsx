@@ -92,56 +92,48 @@ function AddStudents(props) {
             <div className='form_container'>
                 <form onSubmit={addStudent}
                 method='post'>
-                <div className='form_content'>
-                    <div className='form_item'>
-                        <p>Họ và Tên</p>
-                        <input onChange={(e) => handleName(e)} placeholder='Ngo Thanh Trung' type='text' name='name'
-                               value={student.name}/>
+                    <div className='form_content'>
+                        <div className='form_item'>
+                            <p>Họ và Tên</p>
+                            <input onChange={(e) => handleName(e)} placeholder='Ngo Thanh Trung' type='text' name='name'
+                                   value={student.name}/>
+                        </div>
+                        <div className='form_item'>
+                            <p>Họ và Tên</p>
+                            <select onChange={(e) => handleGender(e.target.value)}
+                                    value={student.gender}>
+                                <option value=''>Gioi tinh</option>
+                                <option value='nam'>Nam</option>
+                                <option value='nữ'>Nu</option>
+                                <option value='khác'>other</option>
+                            </select>
+                        </div>
+                        <div className='form_item'>
+                            <p>Ngày sinh</p>
+                            <input
+                                className='date_time'
+                                placeholder='Ngay sinh'
+                                type='date'
+                                value={(student.dob)} // Display in dd-mm-yyyy format by default
+                                name='dob'
+                                onChange={(e) => handleDob(e)}
+                            />
+                        </div>
+                        <div className='form_item'>
+                            <p>Email</p>
+                            <input placeholder='test@gmail.com' type='text' onChange={(e) => handleEmail(e)}
+                                   name='email'
+                                   value={student.email}/>
+                        </div>
+                        <div className='form_item'>
+                            <p>Địa chỉ</p>
+                            <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => handleAddress(e)}
+                                   name='address'
+                                   value={student.address}/>
+                        </div>
+                        <button className='btn login_btn submit_btn' type='submit'>Submit</button>
+                        <button className='btn cancel_btn' onClick={handleCancel}>Cancel</button>
                     </div>
-                    <div className='form_item'>
-                        <p>Giới tính</p>
-                        <input placeholder="Nam" list="opts" onChange={(e) => handleGender(e)} name='gender'
-                               value={student.gender}/>
-                        <datalist id="opts">
-                            <option value='male'>Nam</option>
-                            <option value='female'>Nữ</option>
-                            <option value='other'>Khac</option>
-                        </datalist>
-                    </div>
-                    <div className='form_item'>
-                        <p>Ngày sinh</p>
-                        <input
-                            className='date_time'
-                            placeholder='Ngay sinh'
-                            type='text'
-                            onFocus={(e) => {
-                                e.target.type = 'date';
-                                e.target.value = student.dob; // Set the value to yyyy-mm-dd format when focused
-                            }}
-                            onBlur={(e) => {
-                                e.target.type = 'text';
-                                e.target.value = formatDateToDisplay(student.dob); // Display in dd-mm-yyyy format when not focused
-                            }}
-                            value={formatDateToDisplay(student.dob)} // Display in dd-mm-yyyy format by default
-                            name='dob'
-                            onChange={(e) => handleDob(e)}
-                        />
-                    </div>
-                    <div className='form_item'>
-                        <p>Email</p>
-                        <input placeholder='test@gmail.com' type='text' onChange={(e) => handleEmail(e)} name='email'
-                               value={student.email}/>
-                    </div>
-                    <div className='form_item'>
-                        <p>Địa chỉ</p>
-                        <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => handleAddress(e)}
-                               name='address'
-                               value={student.address}/>
-                        {/*<p><span className="textarea" role="textbox" contentEditable></span></p>*/}
-                    </div>
-                    <button className='btn login_btn submit_btn' type='submit'>Submit</button>
-                    <button className='btn cancel_btn' onClick={handleCancel}>Cancel</button>
-                </div>
                 </form>
             </div>
         </>

@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
 import {DiffFilled} from "@ant-design/icons";
+import axios from "axios";
 
 function AdminFunctions()
 {
@@ -11,51 +12,113 @@ function AdminFunctions()
     const [ageMin, setageMin] = useState('')
     const [siso, setSiso] = useState('')
     const [className, setClassName] = useState('')
+    const [classNameNew, setClassNameNew] = useState('')
     const [subjectName, setSubjectName] = useState('')
+    const [addSubject, setAddsubject] = useState('')
+    const [addClass, setaddClass] = useState('')
+    const [dellSubject, setDellSubject] = useState('')
+    const [dellClass, setDellClass] = useState('')
     const [score, setScore] = useState('')
 
     const [searchClass, setSearchClass] = useState('')
     const [subjectPicker, setSubjectPicker] = useState('')
+    const [subjectPickerScore, setSubjectPickerScore] = useState('')
+    const [delsubjectPicker, setDellSubjectPicker] = useState('')
+
+    const [listOfClass, setlistOfClass] = useState([])
+
+    useEffect(() => {
+        const fetchClasses = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/dslop.php');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setlistOfClass(data);
+            } catch (error) {
+                console.error('Error fetching class list:', error);
+            }
+        };
+
+        fetchClasses();
+    }, []);
+    const [listOfSubs, setListOfSubs] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8000/MAMON_get.php')
+            .then(response => response.json())
+            .then(data => setListOfSubs(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
+
+
 
     const handleSetChangeAge = () => {
         let fdata = new FormData()
         fdata.append("ageMax", ageMax)
         fdata.append("ageMin", ageMin)
-        fetch('http://localhost:8000/handleChangeSetting.php', {method: 'POST', body: fdata})
-            .then(response => response.json())
+        axios.post('http://localhost:8000/handleChangeSetting.php', fdata)
             .then(() => {
-                console.log('submitted')
+                alert('Thay doi thanh cong')
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
-    const handleSetChanegSiSo = () => {
+    const handleSetChanegLop = () => {
         let fdata = new FormData()
-        fdata.append("siso", siso)
-        if(className != ""){
-            fdata.append("className", className)
+        if(searchClass != ""){
+            fdata.append("nhanlop", searchClass)
         }
-        else if(className === ""){
-            fdata.append("className", searchClass)
+        if(siso != '')
+        {
+            fdata.append("nhansiso", siso)
         }
-        fdata.append('ID_LOP', searchClass)
-        fetch('http://localhost:8000/handleChangeSetting.php', {method: 'POST', body: fdata})
-            .then(response => response.json())
+        if(classNameNew != '')
+        {
+            fdata.append("tenlopmoi", classNameNew)
+        }
+        if(addClass != '')
+        {
+            fdata.append("lopthem", addClass)
+        }
+        if(dellClass != '')
+        {
+            fdata.append("lopxoa", dellClass)
+        }
+        axios.post('http://localhost:8000/class_settings.php', fdata)
             .then(() => {
-                console.log('submitted')
+                alert('Đã thay đổi thành công')
+                setSiso('')
+                setSearchClass('')
+                setClassNameNew('')
+                setaddClass('')
+                setDellClass('')
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
     const handleSetChanegMonHoc = () => {
+
         let fdata = new FormData()
-        fdata.append("subjectName", subjectName)
-        fetch('http://localhost:8000/baocao_mon.php', {method: 'POST', body: fdata})
-            .then(response => response.json())
+        if(subjectName != "")
+        {
+            fdata.append("subjectName", subjectName)
+            fdata.append("id_monhoc", subjectPicker)
+        }
+
+        if(addSubject != ""){
+            fdata.append("actions_add", '1')
+            fdata.append("TEN_MONHOC_add", addSubject)
+        }
+        if(addSubject != "") {
+            fdata.append("actions_dell", '2')
+            fdata.append("id_monhoc_dell", subjectPicker)
+        }
+        axios.post('http://localhost:8000/SubjectChangeSetting.php', fdata)
             .then(() => {
-                console.log()
+                alert('Đã thay đổi thành công')
             })
             .catch(error => {
                 console.error('There was an error!', error);
@@ -63,105 +126,144 @@ function AdminFunctions()
     }
     const handleSetChangeScore = () => {
         let fdata = new FormData()
+
         fdata.append("score", score)
-        fetch('http://localhost:8000/handleChangeSetting.php', {method: 'POST', body: fdata})
-            .then(response => response.json())
+        fdata.append('MAMON', subjectPickerScore)
+        axios.post('http://localhost:8000/handleChangeSetting.php', fdata)
             .then(() => {
-                console.log()
+                alert('Đã thay đổi thành công')
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
     }
 
+
+
         return (
             <>
-                {/*<NavBar/>*/}
+                <NavBar/>
                 <div className='function_title'>
                     <p>Admin</p>
                 </div>
 
                 <div className='adminSection'>
+                    <div className="adminTitle"><b>THAY ĐỔI ĐỘ TUỔI</b></div>
                     <div className='age_section'>
-                        <p>Thay doi do tuoi</p>
-                        <p>Do tuoi toi da</p>
+                        <p>Tuổi tối thiểu:</p>
                         <input className='inputBar' type='number' onChange={(e) => setageMax(e.target.value)}
                                value={ageMax}/>
-                        <p>Do tuoi toi thieu</p>
+                        <p>Tuổi tối đa:</p>
                         <input className='inputBar' type='number' onChange={(e) => setageMin(e.target.value)}
                                value={ageMin}/>
                         <button className='btn login_btn submit_btn' onClick={handleSetChangeAge}>Submit</button>
-
                     </div>
+                    <div className="adminTitle"><b>THAY ĐỔI LỚP</b></div>
                     <div className='class_section'>
-                        <p>Thay doi lop</p>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSearchClass(e.target.value)}
                                 value={searchClass}>
-                            <option value=''>Chon lop</option>
-                            <option value='10CA'>10CA</option>
-                            <option value='10A1'>10A1</option>
-                            <option value='10A2'>10A2</option>
-                            <option value='10A3'>10A3</option>
-                            <option value='10A4'>10A4</option>
-                            <option value='11A1'>11A1</option>
-                            <option value='11A2'>11A2</option>
-                            <option value='11A3'>11A3</option>
-                            <option value='12A1'>12A1</option>
-                            <option value='12A2'>12A2</option>
+                            <option value="">Chon Lop</option>
+                            {
+                                listOfClass.length > 0 ? (
+                                    listOfClass.map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                         </select>
-                        <p>Si so toi da</p>
+                        <p>Sĩ số tối đa:</p>
                         <input className='inputBar' type='number' value={siso}
                                onChange={(e) => setSiso(e.target.value)}/>
-                        <p>Ten lop moi</p>
-                        <input className='inputBar' type='text' value={className}
-                               onChange={(e) => setClassName(e.target.value)}/>
+                        <p>Tên lớp mới:</p>
+                        <input className='inputBar' type='text' value={classNameNew}
+                               onChange={(e) => setClassNameNew(e.target.value)}/>
+                        <p>Thêm lớp:</p>
+                        <input className='inputBar' type='text' value={addClass}
+                               onChange={(e) => setaddClass(e.target.value)}/>
+                        <p>Xóa lớp:</p>
+                        <select className='search_student_class'
+                                onChange={(e) => setDellClass(e.target.value)}
+                                value={dellClass}>
+                            <option value="">Chon Lop</option>
+                            {
+                                listOfClass.length > 0 ? (
+                                    listOfClass.map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
+                        </select>
                         <button className='btn login_btn submit_btn'
-                                onClick={handleSetChanegSiSo}>Submit
+                                onClick={handleSetChanegLop}>Submit
                         </button>
 
                     </div>
+                    <div className="adminTitle"><b>THAY ĐỔI MÔN HỌC</b></div>
                     <div className='subject_section'>
-                        <p>Thay doi mon hoc</p>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSubjectPicker(e.target.value)}
                                 value={subjectPicker}>
-                            <option value=''>Chon mon</option>
-                            <option value='1'>Toan</option>
-                            <option value='2'>Ly</option>
-                            <option value='3'>Hoa</option>
-                            <option value='4'>Sinh</option>
-                            <option value='7'>Su</option>
-                            <option value='8'>Dia</option>
-                            <option value='6'>Van</option>
-                            <option value='10'>Dao duc</option>
-                            <option value='12'>The duc</option>
+                            <option value="">Chon Mon</option>
+                            {
+                                listOfSubs.length > 0 ? (
+                                    listOfSubs.map((className, index) => (
+                                        <option key={index} value={className.ID_MONHOC}>
+                                            {className.TEN_MONHOC}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                         </select>
-                        <p>Ten mon hoc moi</p>
+                        <p>Tên môn mới:</p>
                         <input className='inputBar' type='text' value={subjectName}
-                               onChange={(e) => setSubjectName(e.target.value)}/>
+                               onChange={(e) => {
+                                   setSubjectName(e.target.value)
+                               }}/>
+                        <p>Thêm môn:</p>
+                        <input className='inputBar' type='text' value={addSubject}
+                               onChange={(e) => {
+                                   setAddsubject(e.target.value)
+                               }}/>
+                        <p>Xóa môn:</p>
+                        <input className='inputBar' type='text' value={dellSubject}
+                               onChange={(e) => {
+                                   setDellSubject(e.target.value)
+                               }}/>
                         <button className='btn login_btn submit_btn' type='submit'
                                 onClick={handleSetChanegMonHoc}>Submit
                         </button>
 
                     </div>
+                    <div className="adminTitle"><b>THAY ĐỔI ĐIỂM</b></div>
                     <div className='score_section'>
-                        <p>Thay doi diem</p>
-                        <select className='search_student_class' id="opts"
-                                onChange={(e) => setSubjectPicker(e.target.value)}
-                                value={subjectPicker}>
-                            <option value=''>Chon mon</option>
-                            <option value='1'>Toan</option>
-                            <option value='2'>Ly</option>
-                            <option value='3'>Hoa</option>
-                            <option value='4'>Sinh</option>
-                            <option value='7'>Su</option>
-                            <option value='8'>Dia</option>
-                            <option value='6'>Van</option>
-                            <option value='10'>Dao duc</option>
-                            <option value='12'>The duc</option>
+                        <select className='search_student_class'
+                                onChange={(e) => setSubjectPickerScore(e.target.value)}
+                                value={subjectPickerScore}>
+                            <option value="">Chon Mon</option>
+                            {
+                                listOfSubs.length > 0 ? (
+                                    listOfSubs.map((className, index) => (
+                                        <option key={index} value={className.ID_MONHOC}>
+                                            {className.TEN_MONHOC}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                         </select>
-                        <p>Diem dat mon toi thieu</p>
+                        <p>Điểm đạt tối thiểu:</p>
                         <input className='inputBar' type='number' value={score}
                                onChange={(e) => setScore(e.target.value)}/>
                         <button className='btn login_btn submit_btn'

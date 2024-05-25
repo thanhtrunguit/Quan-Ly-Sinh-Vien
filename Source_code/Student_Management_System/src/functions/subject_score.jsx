@@ -17,10 +17,37 @@ const SubjectScore = () => {
     const [fetchdataClass, setFetchdataClass] = useState([])
     const { malopgv } = useContext(MalopContext);
     const { userrole } = useContext(UserRole);
+    const [scoreState, setScoreState] = useState(true)
+    const [year, setYear] = useState('')
 
-    const handleListOfClass = (searchClass) => {
+
+    const handleListOfClass = (searchClass, subjectPicker, hockyPicker ,yearPicker) => {
         let fdata1 = new FormData()
         fdata1.append("class", searchClass)
+        fdata1.append('MAMON', subjectPicker);
+        fdata1.append('HOCKY', hockyPicker);
+        fdata1.append('NAM', yearPicker);
+        fetch('http://localhost:8000/SearchAllScore.php', {method: 'POST', body: fdata1})
+            .then(response => response.json())
+            .then(data => {
+                setFetchdataClass(data)
+                setStudents(data.map(student => ({
+                    ...student,
+                    score15: '',
+                    score45: '',
+                    tbScore: ''
+                })));
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+    const handleClass = (searchClass) => {
+        let fdata1 = new FormData()
+        const date = new Date()
+        setYearPicker(date.getFullYear() - 1 )
+        fdata1.append("class", searchClass)
+        fdata1.append('NAM', yearPicker);
         fetch('http://localhost:8000/SearchSTDByClass.php', {method: 'POST', body: fdata1})
             .then(response => response.json())
             .then(data => {
@@ -37,17 +64,24 @@ const SubjectScore = () => {
             });
     }
     useEffect(() => {
-        if (searchClass) {
-            handleListOfClass(searchClass);
+        if (searchClass && subjectPicker && hockyPicker && yearPicker && scoreState ) {
+            handleListOfClass(searchClass, subjectPicker, hockyPicker, yearPicker);
+        }
+    }, [searchClass, subjectPicker, hockyPicker, yearPicker]);
+
+    useEffect(() => {
+        if (searchClass && scoreState === false ) {
+            handleClass(searchClass);
         }
     }, [searchClass]);
+
     const handleScoreChange = (studentId, scoreType, event) => {
         let { value } = event.target;
         if(value <= limit[1] && value >= limit[0])
         {
             setStudents(prevStudents => {
                 return prevStudents.map(student => {
-                    if (student.id === studentId) {
+                    if (student.ID_HOCSINH === studentId) {
                         return {...student, [scoreType]: value};
                     }
                     return student;
@@ -60,7 +94,7 @@ const SubjectScore = () => {
                 value = 10
                 setStudents(prevStudents => {
                     return prevStudents.map(student => {
-                        if (student.id === studentId) {
+                        if (student.ID_HOCSINH === studentId) {
                             return {...student, [scoreType]: value};
                         }
                         return student;
@@ -72,9 +106,11 @@ const SubjectScore = () => {
     };
     const studentScorings = (e) => {
         e.preventDefault()
+        const date = new Date()
+        setYearPicker(date.getFullYear() - 1 )
         let fdata = new FormData()
         students.forEach((student) => {
-            fdata.append('id', student.id);
+            fdata.append('id', student.ID_HOCSINH);
             fdata.append('score15', student.score15);
             fdata.append('score45', student.score45);
             fdata.append('scoretb', student.tbScore);
@@ -83,63 +119,94 @@ const SubjectScore = () => {
             fdata.append('NAM', yearPicker);
             axios.post('http://localhost:8000/UpdateStScore.php', fdata)
                 .then(response => {
-                    console.log(response.data);
+                    console.log('submitted');
                 })
                 .catch(error => {
                     console.error('There was an error!', error);
                 });
         })
     }
+    const handleScoreState = () =>{
+        if(scoreState == true)
+        {
+            setScoreState(false)
+            setSubjectPicker('')
+            setSearchClass('')
+            setHockyPicker('')
+        }
+        else if(scoreState == false)
+        {
+            setScoreState(true)
+            setSubjectPicker('')
+            setSearchClass('')
+            setHockyPicker('')
+        }
+    }
+    const [listOfClass, setlistOfClass] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:8000/dslop.php')
+            .then(response => response.json())
+            .then(data => setlistOfClass(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
+    const [listOfSubs, setListOfSubs] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8000/MAMON_get.php')
+            .then(response => response.json())
+            .then(data => setListOfSubs(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
 
     return (
         <>
             <NavBar/>
             <div className='function_title'>
-                <p>Nhập điểm môn học</p>
+                {
+                    scoreState == true ?
+                        (<p>Xem điểm môn học</p>)
+                        :
+                        (<p>Nhap điểm môn học</p>)
+                }
             </div>
             <div className='select_container'>
                 <div className='select_content'>
                     <div className='select_section'>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSearchClass(e.target.value)}
                                 value={searchClass}>
-                            {userrole == "admin" ?
-                                (<>
-                                    <option value=''>Chon lop</option>
-                                    <option value='10A1'>10A1</option>
-                                    <option value='10A2'>10A2</option>
-                                    <option value='10A3'>10A3</option>
-                                    <option value='10A4'>10A4</option>
-                                    <option value='11A1'>11A1</option>
-                                    <option value='11A2'>11A2</option>
-                                    <option value='11A3'>11A3</option>
-                                    <option value='12A1'>12A1</option>
-                                    <option value='12A2'>12A2</option>
-                                </>)
-                                :
-                                (
+                            <option value="">Chon Lop</option>
+                            {
+                                listOfClass.length > 0 && userrole == 'admin' ? (
+                                    listOfClass.map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))
+                                ) : (
                                     <>
                                         <option value=''>Chon lop</option>
                                         <option value={malopgv}>{malopgv}</option>
                                     </>
-                                )
-                            }
+                                )}
                         </select>
                     </div>
                     <div className='select_section'>
-                        <select className='search_student_class' id="opts"
+                        <select className='search_student_class'
                                 onChange={(e) => setSubjectPicker(e.target.value)}
                                 value={subjectPicker}>
-                            <option value=''>Chon mon</option>
-                            <option value='1'>Toan</option>
-                            <option value='2'>Ly</option>
-                            <option value='3'>Hoa</option>
-                            <option value='4'>Sinh</option>
-                            <option value='7'>Su</option>
-                            <option value='8'>Dia</option>
-                            <option value='6'>Van</option>
-                            <option value='10'>Dao duc</option>
-                            <option value='12'>The duc</option>
+                            <option value="">Chon Mon</option>
+                            {
+                                listOfSubs.length > 0 ? (
+                                    listOfSubs.map((className, index) => (
+                                        <option key={index} value={className.ID_MONHOC}>
+                                            {className.TEN_MONHOC}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                         </select>
                     </div>
                     <div className='select_section'>
@@ -152,34 +219,62 @@ const SubjectScore = () => {
                         </select>
                     </div>
                     <div className='select_section'>
-                        <select className='search_student_class' id="opts"
-                                onChange={(e) => setYearPicker(e.target.value)}
-                                value={yearPicker}>
-                            <option value=''>Chon nam</option>
-                            <option value='2021'>2021</option>
-                            <option value='2022'>2022</option>
-                            <option value='2023'>2023</option>
-                        </select>
+                        {
+                            scoreState == true ?
+                                (<select className='search_student_class' id="opts"
+                                         onChange={(e) => setYearPicker(e.target.value)}
+                                         value={yearPicker}>
+                                    <option value=''>Chon nam</option>
+                                    <option value='2021'>2021</option>
+                                    <option value='2022'>2022</option>
+                                    <option value='2023'>2023</option>
+                                </select>):
+                                (
+                                    <select className='search_student_class' id="opts"
+                                            onChange={(e) => setYearPicker(e.target.value)}
+                                            value={yearPicker}>
+                                        <option value='2023'>2023</option>
+                                    </select>
+                                )
+                        }
                     </div>
+                    {
+                        scoreState == true ?
+                            (<button className='btn login_btn submit_btn submit_btn_createClass'
+                                     onClick={handleScoreState}>Nhap diem</button>)
+                            :
+                            (<button className='btn login_btn submit_btn submit_btn_createClass'
+                                     onClick={handleScoreState}>Xem diem</button>)
+
+                    }
                 </div>
             </div>
             <div className='studentScore_container score_container'>
-                <form onSubmit={studentScorings}
+            <form onSubmit={studentScorings}
                       method='post'>
                     <div className='studentScore_content searchStudent_content'>
                         <table>
                             <thead>
                             <tr>
                                 <th>Student id</th>
-                                <th>Student Name</th>
-                                <th>15 Score</th>
-                                <th>45 Score</th>
-                                <th>TB Score</th>
+                                <th>Họ và Tên</th>
+                                <th>15 phút</th>
+                                <th>45 phút</th>
+                                <th>Điểm TB</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {searchClass.length > 0 && fetchdataClass.map(student => (
-                                <tr key={student.id}>
+                            {scoreState && searchClass.length > 0 && fetchdataClass.map((student, index) => (
+                                <tr key={index}>
+                                    <td>{student.ID_HOCSINH}</td>
+                                    <td>{student.HOTEN}</td>
+                                    <td>{student.DIEM15}</td>
+                                    <td>{student.DIEM45}</td>
+                                    <td>{student.DIEMTB}</td>
+                                </tr>
+                            ))}
+                            {scoreState == false && searchClass.length > 0 && fetchdataClass.map((student) => (
+                                <tr key={student.ID_HOCSINH}>
                                     <td>{student.ID_HOCSINH}</td>
                                     <td>{student.HOTEN}</td>
                                     <td>
@@ -194,7 +289,7 @@ const SubjectScore = () => {
                                             max='10'
                                             id='score15'
                                             value={student.score15}
-                                            onChange={(e) => handleScoreChange(student.id, 'score15', e)}
+                                            onChange={(e) => handleScoreChange(student.ID_HOCSINH, 'score15', e)}
                                         />
                                     </td>
                                     <td>
@@ -207,7 +302,7 @@ const SubjectScore = () => {
                                             type="number"
                                             id='score45'
                                             value={student.score45}
-                                            onChange={(e) => handleScoreChange(student.id, 'score45', e)}
+                                            onChange={(e) => handleScoreChange(student.ID_HOCSINH, 'score45', e)}
                                         />
                                     </td>
                                     <td>
@@ -220,7 +315,7 @@ const SubjectScore = () => {
                                             type="number"
                                             id='scoreTB'
                                             value={student.tbScore}
-                                            onChange={(e) => handleScoreChange(student.id, 'tbScore', e)}
+                                            onChange={(e) => handleScoreChange(student.ID_HOCSINH, 'tbScore', e)}
                                         />
                                     </td>
                                 </tr>
@@ -228,8 +323,8 @@ const SubjectScore = () => {
                             </tbody>
                         </table>
                     </div>
-                    <button className='btn login_btn submit_btn submit_btn_createClass' type='submit'>Submit</button>
-                </form>
+                <button className='btn login_btn submit_btn submit_btn_createClass' type='submit'>Submit</button>
+            </form>
             </div>
         </>
     );
