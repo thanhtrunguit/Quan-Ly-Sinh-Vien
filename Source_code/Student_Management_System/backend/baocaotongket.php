@@ -15,7 +15,7 @@ $result_hocky = mysqli_query($conn, $sql_get_hocky);
 $row_hocky = mysqli_fetch_assoc($result_hocky);
 $id_hocky = $row_hocky['ID_HOCKY'];
 
-$diem_dat_hocky = "SELECT GIATRI_THAMSO FROM THAM_SO WHERE ID_THAMSO = '1'";
+$diem_dat_hocky = "SELECT GIATRI_THAMSO FROM THAM_SO WHERE ID_THAMSO = '3'";
 $diemdat = mysqli_query($conn, $diem_dat_hocky);
 
 $row_hocky = mysqli_fetch_assoc($diemdat);

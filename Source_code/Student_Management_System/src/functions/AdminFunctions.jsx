@@ -156,7 +156,7 @@ function AdminFunctions()
                         <p>Tuổi tối đa:</p>
                         <input className='inputBar' type='number' onChange={(e) => setageMin(e.target.value)}
                                value={ageMin}/>
-                        <button className='btn login_btn submit_btn' onClick={handleSetChangeAge}>Submit</button>
+                        <button className='btnA' onClick={handleSetChangeAge}>Submit</button>
                     </div>
                     <div className="adminTitle"><b>THAY ĐỔI LỚP</b></div>
                     <div className='class_section'>
@@ -202,7 +202,7 @@ function AdminFunctions()
                                     </>
                                 )}
                         </select>
-                        <button className='btn login_btn submit_btn'
+                        <button className='btnA'
                                 onClick={handleSetChanegLop}>Submit
                         </button>
 
@@ -240,7 +240,7 @@ function AdminFunctions()
                                onChange={(e) => {
                                    setDellSubject(e.target.value)
                                }}/>
-                        <button className='btn login_btn submit_btn' type='submit'
+                        <button className='btnA' type='submit'
                                 onClick={handleSetChanegMonHoc}>Submit
                         </button>
 
@@ -266,7 +266,7 @@ function AdminFunctions()
                         <p>Điểm đạt tối thiểu:</p>
                         <input className='inputBar' type='number' value={score}
                                onChange={(e) => setScore(e.target.value)}/>
-                        <button className='btn login_btn submit_btn'
+                        <button className='btnA'
                                 onClick={handleSetChangeScore}>Submit
                         </button>
 

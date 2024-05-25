@@ -5,59 +5,60 @@ import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
 import axios from 'axios'
 function AddStudents(props) {
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     var currentTime = new Date()
     var year = currentTime.getFullYear()
-    const { id, placeHolder } = props;
-    const [student, setStudent] = useState({
-        id: '',
-        name: '',
-        gender: '',
-        dob: '',
-        email: '',
-        address: ''
-    })
-    const handleName = (e) => {
-        e.persist()
-        setStudent({...student, [e.target.name]: e.target.value})
-    }
-    const handleGender = (e) => {
-        setStudent({...student, [e.target.name]: e.target.value})
-    }
-    const handleEmail = (e) => {
-        setStudent({...student, [e.target.name]: e.target.value})
-    }
-    const handleAddress = (e) => {
-        setStudent({...student, [e.target.name]: e.target.value})
-    }
-    const handleDob = (e) => {
-        const dateFormated = formatDateToDisplay(e.target.value)
-        setStudent({...student, [e.target.name]: e.target.value})
-    }
+    const [gender, setGender] = useState('')
+    const [name, setName] = useState('')
+    const [dob, setDob] = useState('')
+    const [email, setemail] = useState('')
+    const [address, setAddress] = useState('')
+
     const addStudent = (e) => {
         e.preventDefault()
-
-        let fdata = new FormData()
-        // fdata.append("id", )
-        fdata.append("name", student.name)
-        fdata.append("gender", student.gender)
-        fdata.append("dob", student.dob)
-        fdata.append("email", student.email)
-        fdata.append("address", student.address)
-        axios.post('http://localhost:8000/themhsvippro.php', fdata)
-            .then(response => {
-                let ans = confirm("submitted")
-                if(ans){
-                    setCancel(true)
-                }
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-
+        const curD = new Date()
+        const curY = curD.getFullYear()
+        const intputY = new Date(dob).getFullYear();
+        if(name == '' || gender == '' || dob == '' || email == "" || address == '')
+        {
+            alert('Không được để trống thông tin')
+        }
+        else
+        {
+            if(curY - intputY >= age.agemin && curY - intputY <= age.agemax)
+            {
+                let fdata = new FormData()
+                fdata.append("name", name)
+                fdata.append("gender", gender)
+                fdata.append("dob", dob)
+                fdata.append("email", email)
+                fdata.append("address", address)
+                axios.post('http://localhost:8000/themhsvippro.php', fdata)
+                    .then(response => {
+                        let ans = confirm("submitted")
+                        if(ans){
+                            setCancel(true)
+                        }
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.error('There was an error!', error);
+                    });
+            }
+            else
+            {
+                alert('Nam sinh khong phu hop')
+            }
+        }
     }
     const [cancel, setCancel] = useState(false)
+
+    const [age, setage] = useState('')
+    useEffect(() => {
+        fetch('http://localhost:8000/Age_get.php')
+            .then(response => response.json())
+            .then(data => setage(data))
+            .catch(error => console.error('Error fetching class list:', error));
+    }, []);
     const handleCancel = () => {
         for (let [key, value] of Object.entries(student)) {
             if( value != "")
@@ -72,7 +73,6 @@ function AddStudents(props) {
         }
     }
     if (cancel){
-        // setStudent('', '', '', '' ,'')
         return (
             <Navigate to= '/functions' />
         )
@@ -95,17 +95,17 @@ function AddStudents(props) {
                     <div className='form_content'>
                         <div className='form_item'>
                             <p>Họ và Tên</p>
-                            <input onChange={(e) => handleName(e)} placeholder='Ngo Thanh Trung' type='text' name='name'
-                                   value={student.name}/>
+                            <input onChange={(e) => setName(e.target.value)} placeholder='Ngo Thanh Trung' type='text' name='name'
+                                   value={name}/>
                         </div>
                         <div className='form_item'>
-                            <p>Họ và Tên</p>
-                            <select onChange={(e) => handleGender(e.target.value)}
-                                    value={student.gender}>
+                            <p>Giới tính</p>
+                            <select onChange={(e) => setGender(e.target.value)}
+                                    value={gender}>
                                 <option value=''>Gioi tinh</option>
                                 <option value='nam'>Nam</option>
-                                <option value='nữ'>Nu</option>
-                                <option value='khác'>other</option>
+                                <option value='nu'>Nu</option>
+                                <option value='khac'>other</option>
                             </select>
                         </div>
                         <div className='form_item'>
@@ -114,22 +114,22 @@ function AddStudents(props) {
                                 className='date_time'
                                 placeholder='Ngay sinh'
                                 type='date'
-                                value={(student.dob)} // Display in dd-mm-yyyy format by default
+                                value={(dob)} // Display in dd-mm-yyyy format by default
                                 name='dob'
-                                onChange={(e) => handleDob(e)}
+                                onChange={(e) => setDob(e.target.value)}
                             />
                         </div>
                         <div className='form_item'>
                             <p>Email</p>
-                            <input placeholder='test@gmail.com' type='text' onChange={(e) => handleEmail(e)}
+                            <input placeholder='test@gmail.com' type='text' onChange={(e) => setemail(e.target.value)}
                                    name='email'
-                                   value={student.email}/>
+                                   value={email}/>
                         </div>
                         <div className='form_item'>
                             <p>Địa chỉ</p>
-                            <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => handleAddress(e)}
+                            <input placeholder='TP Ho Chi Minh' type='text' onChange={(e) => setAddress(e.target.value)}
                                    name='address'
-                                   value={student.address}/>
+                                   value={address}/>
                         </div>
                         <button className='btn login_btn submit_btn' type='submit'>Submit</button>
                         <button className='btn cancel_btn' onClick={handleCancel}>Cancel</button>

@@ -13,31 +13,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'];
     $email = $_POST['email'];
 
-    $birthYear = (int)date('Y', strtotime($birthdate));
-    $currentYear = (int)date('Y');
-    $age = $currentYear - $birthYear;
-    if ($age == 15) {
-        $grade = '10';
-        $prefix = '23';
-    } elseif ($age == 16) {
-        $grade = '11';
-        $prefix = '22';
-    } elseif ($age == 17) {
-        $grade = '12';
-        $prefix = '21';
-    } else {
-        die("Invalid age for school.");
-    }
-    // Truy vấn để tìm mã học sinh lớn nhất hiện có với tiền tố tương ứng (gpt)
-    $sql = "SELECT MAX(CAST(SUBSTRING(ID_HOCSINH, 3, 4) AS UNSIGNED)) AS max_code FROM HOCSINH WHERE ID_HOCSINH LIKE '$prefix%'";
-    $result = $conn->query($sql);
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $next_code = $row['max_code'] + 1;
-        $student_code = $prefix . str_pad($next_code, 4, '0', STR_PAD_LEFT);
-    } else {
-        die("Error: " . $conn->error);
-    }
+//    $birthYear = (int)date('Y', strtotime($birthdate));
+//    $currentYear = (int)date('Y');
+//    $age = $currentYear - $birthYear;
+//    if ($age == 15) {
+//        $grade = '10';
+//        $prefix = '23';
+//    } elseif ($age == 16) {
+//        $grade = '11';
+//        $prefix = '22';
+//    } elseif ($age == 17) {
+//        $grade = '12';
+//        $prefix = '21';
+//    } else {
+//        die("Invalid age for school.");
+//    }
+//    // Truy vấn để tìm mã học sinh lớn nhất hiện có với tiền tố tương ứng (gpt)
+//    $sql = "SELECT MAX(CAST(SUBSTRING(ID_HOCSINH, 3, 4) AS UNSIGNED)) AS max_code FROM HOCSINH WHERE ID_HOCSINH LIKE '$prefix%'";
+//    $result = $conn->query($sql);
+//    if ($result) {
+//        $row = $result->fetch_assoc();
+//        $next_code = $row['max_code'] + 1;
+//        $student_code = $prefix . str_pad($next_code, 4, '0', STR_PAD_LEFT);
+//    } else {
+//        die("Error: " . $conn->error);
+//    }
 
     $sql = "SELECT MAX(ID_HOCSINH) AS max_id FROM HOCSINH";
     $result = $conn->query($sql);
@@ -49,10 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $maLopBanDau = '0';
     $stmt = $conn->prepare("INSERT INTO HOCSINH (ID_HOCSINH, HOTEN, NGAY_SINH, GIOI_TINH, DIACHI, EMAIL, ID_LOP) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssss",$student_code, $fullname, $birthdate, $gender, $address, $email, $maLopBanDau);
+    $stmt->bind_param("issssss",$next_id, $fullname, $birthdate, $gender, $address, $email, $maLopBanDau);
 
     if ($stmt->execute()) {
-        echo "New student registered successfully. Student Code: $student_code";
+        echo "New student registered successfully. Student Code: $next_id";
     } else {
         echo "Error: " . $stmt->error;
     }

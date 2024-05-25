@@ -274,19 +274,19 @@ const CreateClass = (props) => {
                             <option value="">Chon Lop</option>
                             {
                                 listOfClass.length > 0 && userrole == 'admin' ? (
-                                listOfClass.map((className, index) => (
-                                <option key={index} value={className}>
-                            {className}
-                        </option>
-                        ))
-                            ) : (
+                                    listOfClass.map((className, index) => (
+                                        <option key={index} value={className}>
+                                            {className}
+                                        </option>
+                                    ))
+                                ) : (
                                     <>
                                         <option value=''>Chon lop</option>
                                         <option value={malopgv}>{malopgv}</option>
                                     </>
-                            )}
+                                )}
                         </select>
-                        
+
                         {
                             search.length > 0 ?
                                 (<div className='siso search_student_class '>{fetchdataSiSo}</div>)
@@ -344,7 +344,7 @@ const CreateClass = (props) => {
                       method='post'>
                     <div className='studentScore_content searchStudent_content'>
                         <table>
-                        <thead>
+                            <thead>
                             <tr>
                                 <th>Student Id</th>
                                 <th>Student Name</th>
