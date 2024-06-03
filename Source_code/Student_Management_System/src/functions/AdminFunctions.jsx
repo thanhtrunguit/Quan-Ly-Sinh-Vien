@@ -308,25 +308,25 @@ function AdminFunctions() {
                 {/* Accounts Section */}
                 <div className="adminTitle">
                     <b>DANH SÁCH TÀI KHOẢN</b>
-                    <button className='btnA btnB' onClick={handleCheckEmpty}>Tạo tài khoản</button>
                 </div>
+                <button className='btnA btnB' onClick={handleCheckEmpty}>Tạo tài khoản</button>
                 <div className='studentScore_content searchStudent_content'>
                     {menuVisible && (
                         <div className="dim">
-                            <div className="classless">
-                                <div className="classlessTitle">TẠO TÀI KHOẢN</div>
+                            <div className="reg">
+                                <div className="regTitle">TẠO TÀI KHOẢN</div>
                                 <div className="classlessBox">
                                     <form onSubmit={addAccount} method='post'>
                                         <div className='form_content form_contentA'>
-                                            <div className='form_item'>
+                                            <div className='form_item regT'>
                                                 <p>Tên tài khoản</p>
                                                 <input placeholder='GV' onChange={(e) => setAccount(e.target.value)} value={account} />
                                             </div>
-                                            <div className='form_item'>
+                                            <div className='form_item regT'>
                                                 <p>Mật khẩu</p>
                                                 <input placeholder='123' type='text' onChange={(e) => setPassword(e.target.value)} value={password} />
                                             </div>
-                                            <div className='form_item'>
+                                            <div className='form_item regT'>
                                                 <p>Quyền hạn</p>
                                                 <select className='search_student_class' id="opts" onChange={(e) => setRole(e.target.value)} value={role}>
                                                     <option value=''>Quyền hạn</option>
@@ -334,7 +334,7 @@ function AdminFunctions() {
                                                     <option value='user'>user</option>
                                                 </select>
                                             </div>
-                                            <button className='btn login_btn submit_btn' type='submit'>Ghi nhận</button>
+                                            <button className='btn login_btn submit_btn reg_btn' type='submit'>Ghi nhận</button>
                                         </div>
                                     </form>
                                 </div>

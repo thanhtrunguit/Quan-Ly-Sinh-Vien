@@ -150,7 +150,7 @@ const CreateClass = (props) => {
                     onUntick(id)
                 }
             } else {
-                alert('full hoc sinh')
+                alert('lớp đã đầy, không thể tiến hành thêm học sinh mới')
             }
         }catch (error) {
             console.error('errors', error);

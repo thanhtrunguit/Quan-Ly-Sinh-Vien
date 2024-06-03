@@ -797,12 +797,45 @@ body{
 }
 
 .btnB{
-    margin-left: 300px;
+    margin-left: 830px;
+    margin-top: -25px;
 }
 .form_contentA input{
     width: 300px;
 }
 .form_contentA select{
-    margin-left: -1px;
     width: 300px;
+    margin-left: -1px;
+}
+
+.reg{
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    height: auto;
+    border-radius: .3rem;
+    border: 1px solid #8f959e;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    transform: translate(15%);
+    z-index: 1000;
+    position: fixed;
+    top: 50%; /* Move the box down by 50% of the viewport height */
+    left: 50%; /* Move the box right by 50% of the viewport width */
+    transform: translate(-50%, -50%);
+}
+
+.regTitle{
+    text-align: center;
+    padding: .5rem 1rem;
+    font-size: 25px;
+}
+
+.regT{
+    margin-left:90px;
+}
+
+.reg_btn{
+    margin-left:180px;
+    margin-top:40px;
 }
