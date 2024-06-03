@@ -65,6 +65,24 @@ if (mysqli_num_rows($result) > 0) {
              VALUES ('$id', '$mamon', '$id_hocky', '$score15', '$score45', '$scoretb')";
         mysqli_query($conn, $sql);
     }
+    if($score15 != "" && $score45 == "" && $scoretb == "")
+    {
+        $sql = "INSERT INTO CHI_TIET_DIEM (`ID_HOCSINH`, `ID_MONHOC`, `ID_HOCKY`, `DIEM_15P`)
+             VALUES ('$id', '$mamon', '$id_hocky', '$score15')";
+        mysqli_query($conn, $sql);
+    }
+    if($score15 == "" && $score45 != "" && $scoretb == "")
+    {
+        $sql = "INSERT INTO CHI_TIET_DIEM (`ID_HOCSINH`, `ID_MONHOC`, `ID_HOCKY`, `DIEM_45P`)
+             VALUES ('$id', '$mamon', '$id_hocky', $score45)";
+        mysqli_query($conn, $sql);
+    }
+    if($score15 == "" && $score45 == "" && $scoretb != "")
+    {
+        $sql = "INSERT INTO CHI_TIET_DIEM (`ID_HOCSINH`, `ID_MONHOC`, `ID_HOCKY`, `DIEM_TB`)
+             VALUES ('$id', '$mamon', '$id_hocky', '$scoretb')";
+        mysqli_query($conn, $sql);
+    }
 
 }
 
