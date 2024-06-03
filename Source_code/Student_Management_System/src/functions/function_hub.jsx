@@ -17,26 +17,31 @@ function Functions() {
     return (
         <>
             <NavBar/>
-            <div className= 'function_items'>
-                <Link to ='/addStudent' className='box item1'><p>Tiếp nhận học sinh</p><IoIosPersonAdd className='function_icons'/></Link>
-                <Link to ='/createClass' className='box item2'>
-                    <p>Lập danh sách lớp</p>
+            <div className='function_title'><p>TRANG CHỨC NĂNG</p></div>
+            <div className='function_items'>
+                <Link to='/addStudent' className='box item1'><p>Tiếp nhận học sinh</p><IoIosPersonAdd
+                    className='function_icons'/></Link>
+                <Link to='/createClass' className='box item2'>
+                    <p>Danh sách lớp</p>
                     <SiGoogleclassroom className='function_icons'/>
                 </Link>
-                <Link to ='/studentSearch' className='box item3'><p>Tra cứu học sinh</p><FaSearchDollar className='function_icons'/> </Link>
-                <Link to ='/subjectScore' className='box item4'><p>Nhập bảng điểm</p><FaRegPenToSquare className='function_icons'/> </Link>
-                <Link to = '/finalReport' className='box item5'><p>Báo cáo tổng kết</p><GrScorecard className='function_icons'/> </Link>
+                <Link to='/studentSearch' className='box item3'><p>Tra cứu học sinh</p><FaSearchDollar
+                    className='function_icons'/> </Link>
+                <Link to='/subjectScore' className='box item4'><p>Nhập bảng điểm</p><FaRegPenToSquare
+                    className='function_icons'/> </Link>
+                <Link to='/finalReport' className='box item5'><p>Báo cáo tổng kết</p><GrScorecard
+                    className='function_icons'/> </Link>
                 {userrole === 'admin' ?
-                        (
-                            <>
-                                <Link to='/adminFunctions' className='box item5'><p>Chỉnh sửa</p><GrScorecard
+                    (
+                        <>
+                            <Link to='/adminFunctions' className='box item5'><p>Chỉnh sửa</p><GrScorecard
                                 className='function_icons'/> </Link>
-                            </>
-                        )
-                        :
-                        (
-                            <></>
-                        )
+                        </>
+                    )
+                    :
+                    (
+                        <></>
+                    )
                 }
 
             </div>

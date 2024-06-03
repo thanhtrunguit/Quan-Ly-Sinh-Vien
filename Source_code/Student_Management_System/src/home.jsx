@@ -35,7 +35,7 @@ function Home({ isLoggedIn }){
         return (
             <>
                 <NavBar/>
-                <div className='function_title'><p>Trang chủ</p></div>
+                <div className='function_title'><p>TRANG CHỦ</p></div>
                 <div className='home_container'>
                     <div className='home_content'>
                         <div className='HelloGv'>
@@ -53,7 +53,7 @@ function Home({ isLoggedIn }){
                         <p>Trạng thái: {isLoggedIn ? 'Hoạt động' : 'Logged Out'}</p>
                     </div>
                 </div>
-                <div className='bottomLine'><p>Website giáo viên - Trường THPT Abc, kênh thông tin hữu ích cho giáo viên. </p></div>
+                <div className='bottomLine'><p>Website giáo viên - Trường THPT Abc, kênh thông tin hữu ích cho giáo viên </p></div>
             </>
         )
     }

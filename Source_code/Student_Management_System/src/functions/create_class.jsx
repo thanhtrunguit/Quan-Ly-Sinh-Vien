@@ -117,11 +117,11 @@ const CreateClass = (props) => {
     const [assignClass, setAssignClass] = useState([]);
     const [fetchdata, setFetchdata] = useState([])
     const [fetchdataSiSo, setFetchdataSiSo] = useState([])
-    const [noclass, setNoclass] = useState()
     const [fetchnoclass, setFetchnoclass] = useState([])
-    const [studentID, setStudentID] = useState()
     const [checkedStates, setCheckedStates] = useState({});
     const [menuVisible, setMenuVisible] = useState(false)
+
+    const [sisoMax, setSisoMax] = useState('')
 
     const handleChange = async (id) => {
         let fdata = new FormData()
@@ -137,7 +137,7 @@ const CreateClass = (props) => {
             const data = await response.json();
             setFetchdata(data);
             const currentStudentsCount = data.length;
-            if (currentStudentsCount < fetchdataSiSo || checkedStates[id]) {
+            if (currentStudentsCount < sisoMax || checkedStates[id]) {
                 const newCheckedStates = {
                     ...checkedStates,
                     [id]: !checkedStates[id]
@@ -199,9 +199,12 @@ const CreateClass = (props) => {
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    }
-    const handleSiSo = (e) => {
-        setSiso(e.target.value)
+            fetch('http://localhost:8000/SiSoToiDa.php', {method: 'POST', body: fdata})
+            .then(response => response.json())
+            .then(data => setSisoMax(data))
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     }
     const createClass = (e) => {
         e.preventDefault()
@@ -223,18 +226,6 @@ const CreateClass = (props) => {
             handleSearch();
         }
     }, [search]);
-    // useEffect(() => {
-    //     if (noclass == 0) {
-    //         let fdata = new FormData()
-    //         fdata.append("class", noclass)
-    //         fetch('http://localhost:8000/index.php', {method: 'POST', body: fdata})
-    //             .then(response => response.json())
-    //             .then(data => setFetchnoclass(data))
-    //             .catch(error => {
-    //                 console.error('There was an error!', error);
-    //             });
-    //     }
-    // }, [noclass]);
     const handleCheckEmpty = () => {
         // setNoclass(0)
         setMenuVisible(true)
@@ -263,7 +254,7 @@ const CreateClass = (props) => {
         <>
             <NavBar/>
             <div className='function_title'>
-                <p>Lập danh sách lớp</p>
+                <p> DANH SÁCH LỚP</p>
             </div>
             <div className='select_container'>
                 <div className='select_content'>
@@ -271,7 +262,7 @@ const CreateClass = (props) => {
                         <select className='search_student_class'
                                 onChange={(e) => setSearch(e.target.value)}
                                 value={search}>
-                            <option value="">Chon Lop</option>
+                            <option value="">Chọn lớp</option>
                             {
                                 listOfClass.length > 0 && userrole == 'admin' ? (
                                     listOfClass.map((className, index) => (
@@ -281,7 +272,6 @@ const CreateClass = (props) => {
                                     ))
                                 ) : (
                                     <>
-                                        <option value=''>Chon lop</option>
                                         <option value={malopgv}>{malopgv}</option>
                                     </>
                                 )}
@@ -289,13 +279,19 @@ const CreateClass = (props) => {
 
                         {
                             search.length > 0 ?
-                                (<div className='siso search_student_class '>{fetchdataSiSo}</div>)
+                                (
+                                    <>
+                                        <div className='siso search_student_class '>
+                                            {fetchdataSiSo}
+                                        </div>
+                                    </>
+                            )
                                 :
                                 (
                                     <></>
                                 )
                         }
-                        <button className="Copen" onClick={handleCheckEmpty}>Add HS</button>
+                        <button className="Copen" onClick={handleCheckEmpty}>Thêm học sinh</button>
 
                         {menuVisible && (
                             <div className="dim">
@@ -307,10 +303,10 @@ const CreateClass = (props) => {
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên</th>
-                                                <th>Gioi tinh</th>
-                                                <th>Nam sinh</th>
-                                                <th>Dia chi</th>
-                                                <th>Ghi chu</th>
+                                                <th>Giới tính</th>
+                                                <th>Năm sinh</th>
+                                                <th>Địa chỉ</th>
+                                                <th>Thêm</th>
                                             </tr>
                                             </thead>
                                             <tbody className="Cbody">
@@ -346,11 +342,11 @@ const CreateClass = (props) => {
                         <table>
                             <thead>
                             <tr>
-                                <th>Student Id</th>
-                                <th>Student Name</th>
-                                <th>Gender</th>
-                                <th>Nam sinh</th>
-                                <th>Dia chi</th>
+                                <th>Mã HS</th>
+                                <th>Họ và Tên</th>
+                                <th>Giới tính</th>
+                                <th>Năm sinh</th>
+                                <th>Địa chỉ</th>
                             </tr>
                             </thead>
                             <tbody>

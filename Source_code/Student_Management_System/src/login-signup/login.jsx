@@ -19,15 +19,13 @@ function Login({ setIsLoggedIn }){
     const { setMalopgv } = useContext(MalopContext);
     const { setuserrole } = useContext(UserRole);
 
-    // const { setMalopgv } = useMalop();
-    // const { setuserrole } = useUserRole();
     const handleLogin = (e) => {
         e.preventDefault()
         let fdata = new FormData()
-        // fdata.append("username", 'admin')
-        // fdata.append("password", 'password')
-        fdata.append("username", username)
-        fdata.append("password", password)
+        fdata.append("username", 'admin')
+        fdata.append("password", 'password')
+        // fdata.append("username", username)
+        // fdata.append("password", password)
         fetch('http://localhost:8000/login.php', {method: 'POST', body: fdata})
             .then(response => response.json())
             .then(data => {
@@ -36,7 +34,9 @@ function Login({ setIsLoggedIn }){
                 setIsLoggedIn(true)
             })
             .catch(error => {
-                console.error('wrong!');
+                alert('Sai, tài khoản hoặc mật khẩu')
+                setPassword('')
+                setUsername('')
             });
 
 
@@ -74,10 +74,9 @@ function Login({ setIsLoggedIn }){
                             /> <br/>
                             <input onChange={(e) => setPassword(e.target.value)} placeholder="password"
                                value={password}
-                                   // type='password'
+                                   type='password'
                             /> <br/>
                             <button className='btn login_btn' type='submit'>Login</button>
-                            <Link to='/password_retrieve' className='password_forgot'>Forgot your password?</Link>
                         </div>
                     </form>
                 </div>

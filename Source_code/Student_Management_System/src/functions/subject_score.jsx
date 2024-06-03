@@ -104,12 +104,13 @@ const SubjectScore = () => {
 
         }
     };
-    const studentScorings = (e) => {
-        e.preventDefault()
-        const date = new Date()
-        setYearPicker(date.getFullYear() - 1 )
-        let fdata = new FormData()
-        students.forEach((student) => {
+    const studentScorings = async (e) => {
+        e.preventDefault();
+        const date = new Date();
+        setYearPicker(date.getFullYear() - 1);
+        let fdata;
+        const promises = students.map((student) => {
+            fdata = new FormData();
             fdata.append('id', student.ID_HOCSINH);
             fdata.append('score15', student.score15);
             fdata.append('score45', student.score45);
@@ -117,14 +118,18 @@ const SubjectScore = () => {
             fdata.append('MAMON', subjectPicker);
             fdata.append('HOCKY', hockyPicker);
             fdata.append('NAM', yearPicker);
-            axios.post('http://localhost:8000/UpdateStScore.php', fdata)
-                .then(response => {
-                    console.log('submitted');
-                })
-                .catch(error => {
-                    console.error('There was an error!', error);
-                });
-        })
+            return axios.post('http://localhost:8000/UpdateStScore.php', fdata);
+        });
+
+        try {
+            await Promise.all(promises);
+            alert('Nhập điểm thành công!');
+            setSubjectPicker('');
+            setSearchClass('');
+            setHockyPicker('');
+        } catch (error) {
+            console.error('Nhập điểm thất bại, thử lại sau, hoặc liên lạc với kĩ thuật viên!', error);
+        }
     }
     const handleScoreState = () =>{
         if(scoreState == true)
@@ -164,9 +169,9 @@ const SubjectScore = () => {
             <div className='function_title'>
                 {
                     scoreState == true ?
-                        (<p>Xem điểm môn học</p>)
+                        (<p>XEM ĐIỂM MÔN HỌC</p>)
                         :
-                        (<p>Nhap điểm môn học</p>)
+                        (<p>NHẬP ĐIỂM MÔN HỌC</p>)
                 }
             </div>
             <div className='select_container'>
@@ -175,7 +180,7 @@ const SubjectScore = () => {
                         <select className='search_student_class'
                                 onChange={(e) => setSearchClass(e.target.value)}
                                 value={searchClass}>
-                            <option value="">Chon Lop</option>
+                            <option value="">Chọn lớp</option>
                             {
                                 listOfClass.length > 0 && userrole == 'admin' ? (
                                     listOfClass.map((className, index) => (
@@ -185,7 +190,7 @@ const SubjectScore = () => {
                                     ))
                                 ) : (
                                     <>
-                                        <option value=''>Chon lop</option>
+                                        <option value=''>Chọn lớp</option>
                                         <option value={malopgv}>{malopgv}</option>
                                     </>
                                 )}
@@ -195,7 +200,7 @@ const SubjectScore = () => {
                         <select className='search_student_class'
                                 onChange={(e) => setSubjectPicker(e.target.value)}
                                 value={subjectPicker}>
-                            <option value="">Chon Mon</option>
+                            <option value="">Chọn môn</option>
                             {
                                 listOfSubs.length > 0 ? (
                                     listOfSubs.map((className, index) => (
@@ -213,9 +218,9 @@ const SubjectScore = () => {
                         <select className='search_student_class' id="opts"
                                 onChange={(e) => setHockyPicker(e.target.value)}
                                 value={hockyPicker}>
-                            <option value=''>Chon hoc ky</option>
-                            <option value='1'>Hoc ky 1</option>
-                            <option value='2'>Hoc ky 2</option>
+                            <option value=''>Chọn học kỳ</option>
+                            <option value='1'>Học kì 1</option>
+                            <option value='2'>Học kì 2</option>
                         </select>
                     </div>
                     <div className='select_section'>
@@ -224,7 +229,7 @@ const SubjectScore = () => {
                                 (<select className='search_student_class' id="opts"
                                          onChange={(e) => setYearPicker(e.target.value)}
                                          value={yearPicker}>
-                                    <option value=''>Chon nam</option>
+                                    <option value=''>Chọn năm</option>
                                     <option value='2021'>2021</option>
                                     <option value='2022'>2022</option>
                                     <option value='2023'>2023</option>
@@ -241,16 +246,16 @@ const SubjectScore = () => {
                     {
                         scoreState == true ?
                             (<button className='btn login_btn submit_btn submit_btn_createClass'
-                                     onClick={handleScoreState}>Nhap diem</button>)
+                                     onClick={handleScoreState}>Nhập điểm</button>)
                             :
                             (<button className='btn login_btn submit_btn submit_btn_createClass'
-                                     onClick={handleScoreState}>Xem diem</button>)
+                                     onClick={handleScoreState}>Xem điểm</button>)
 
                     }
                 </div>
             </div>
             <div className='studentScore_container score_container'>
-            <form onSubmit={studentScorings}
+                <form onSubmit={studentScorings}
                       method='post'>
                     <div className='studentScore_content searchStudent_content'>
                         <table>
@@ -323,8 +328,18 @@ const SubjectScore = () => {
                             </tbody>
                         </table>
                     </div>
-                <button className='btn login_btn submit_btn submit_btn_createClass' type='submit'>Submit</button>
-            </form>
+                    <>{
+                        scoreState == true ?
+                            (<> </>)
+                            :
+                            (
+                            <button className='btn login_btn submit_btn submit_btn_createClass' type='submit'>Ghi
+                                nhận
+                            </button>
+                            )
+                            }
+                            </>
+                </form>
             </div>
         </>
     );

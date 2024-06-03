@@ -82,7 +82,7 @@ function StudentSearch(props)
         <>
             <NavBar/>
             <div className='function_title'>
-                <p>Tra cứu học sinh</p>
+                <p>TRA CỨU HỌC SINH</p>
             </div>
             <input className='searchBar'
                    onChange={(e) => setSearch(e.target.value)} placeholder='Ho ten hoc sinh' type='text'
@@ -92,7 +92,7 @@ function StudentSearch(props)
             <select className='search_student_class'
                     onChange={(e) => setSearchClass(e.target.value)}
                     value={searchClass}>
-                <option value="">Chon Lop</option>
+                <option value="">Chọn lớp</option>
                 {
                     listOfClass.length > 0 ? (
                         listOfClass.map((className, index) => (

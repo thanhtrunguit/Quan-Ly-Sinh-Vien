@@ -47,14 +47,8 @@ if ($lopthem !== null) {
         $max_id = $row['max_id'];
         $new_id = 'GV' . ($max_id + 1);
 
-        $stmt = $conn->prepare("INSERT INTO lop (ID_LOP, SISO, ID_GIAOVIEN) VALUES (?, 0, ?)");
-        $stmt->bind_param("ss", $lopthem, $new_id);
-
-        if ($stmt->execute()) {
-            echo "New class had set with ID_GIAOVIEN = $new_id";
-        }
-
-        $stmt->close();
+        $sql = "INSERT INTO lop (ID_LOP, SISO, ID_GIAOVIEN) VALUES ('$lopthem', 0, 'admin')";
+        $res = mysqli_query($conn, $sql);
     }
 }
 
@@ -67,14 +61,13 @@ if ($lopxoa !== null) {
     $stmt->close();
 
     if ($student_count > 0) {
-        echo "wrong";
-    } else {
+    }
         $stmt = $conn->prepare("DELETE FROM lop WHERE ID_LOP = ?");
         $stmt->bind_param("s", $lopxoa);
         $stmt->execute();
         $stmt->close();
     }
-}
+
 
 $conn->close();
 ?>

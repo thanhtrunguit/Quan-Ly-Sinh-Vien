@@ -32,7 +32,7 @@ function AddStudents(props) {
                 fdata.append("dob", dob)
                 fdata.append("email", email)
                 fdata.append("address", address)
-                axios.post('http://localhost:8000/themhsvippro.php', fdata)
+                axios.post('http://localhost:8000/AddStudents.php', fdata)
                     .then(response => {
                         let ans = confirm("submitted")
                         if(ans){
@@ -59,29 +59,11 @@ function AddStudents(props) {
             .then(data => setage(data))
             .catch(error => console.error('Error fetching class list:', error));
     }, []);
-    const handleCancel = () => {
-        for (let [key, value] of Object.entries(student)) {
-            if( value != "")
-            {
-                let ans =  confirm('you want to cancel, there seems to be data in the form')
-                if (ans){
-                    setCancel(true)
-                    break;
-                }
-                break
-            }
-        }
-    }
     if (cancel){
         return (
             <Navigate to= '/functions' />
         )
     }
-    const formatDateToDisplay = (dateString) => {
-        if (!dateString) return '';
-        const [year, month, day] = dateString.split('-');
-        return `${day}-${month}-${year}`;
-    };
 
     return (
         <>
@@ -95,14 +77,14 @@ function AddStudents(props) {
                     <div className='form_content'>
                         <div className='form_item'>
                             <p>Họ và Tên</p>
-                            <input onChange={(e) => setName(e.target.value)} placeholder='Ngo Thanh Trung' type='text' name='name'
+                            <input onChange={(e) => setName(e.target.value)} placeholder='Nguyễn Văn A' type='text' name='name'
                                    value={name}/>
                         </div>
                         <div className='form_item'>
                             <p>Giới tính</p>
                             <select onChange={(e) => setGender(e.target.value)}
                                     value={gender}>
-                                <option value=''>Gioi tinh</option>
+                                <option value=''>Giới Tính</option>
                                 <option value='nam'>Nam</option>
                                 <option value='nu'>Nu</option>
                                 <option value='khac'>other</option>
@@ -131,8 +113,8 @@ function AddStudents(props) {
                                    name='address'
                                    value={address}/>
                         </div>
-                        <button className='btn login_btn submit_btn' type='submit'>Submit</button>
-                        <button className='btn cancel_btn' onClick={handleCancel}>Cancel</button>
+                        <button className='btn login_btn submit_btn' type='submit'>Ghi nhận</button>
+                        {/*<button className='btn cancel_btn' onClick={handleCancel}>Cancel</button>*/}
                     </div>
                 </form>
             </div>
