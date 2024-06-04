@@ -3,7 +3,6 @@ import {HTMLInputTypeAttribute} from "react";
 import {useState, useEffect, useContext} from "react";
 import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
-import {Data} from "../data.jsx";
 import axios from "axios";
 import {MalopContext} from "../MalopContext.jsx";
 import {UserRole} from "../UserRoleContext.jsx";
@@ -261,7 +260,7 @@ const SubjectScore = () => {
                         <table>
                             <thead>
                             <tr>
-                                <th>Student id</th>
+                                <th>Mã </th>
                                 <th>Họ và Tên</th>
                                 <th>15 phút</th>
                                 <th>45 phút</th>

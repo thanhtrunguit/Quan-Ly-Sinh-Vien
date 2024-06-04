@@ -214,7 +214,7 @@ function AdminFunctions() {
         <>
             <NavBar />
             <div className='function_title'>
-                <p>Admin</p>
+                <p>ADMIN</p>
             </div>
             <div className='adminSection'>
                 <div className="adminTitle"><b>THAY ĐỔI ĐỘ TUỔI</b></div>
@@ -290,16 +290,16 @@ function AdminFunctions() {
                 {/* Score Section */}
                 <div className="adminTitle"><b>THAY ĐỔI ĐIỂM ĐẠT</b></div>
                 <div className='score_section'>
-                    <select className='search_student_class' onChange={(e) => setSubjectPickerScore(e.target.value)} value={subjectPickerScore}>
-                        <option value="">Chọn Môn</option>
-                        {listOfSubs.length > 0 ? (
-                            listOfSubs.map((className, index) => (
-                                <option key={index} value={className.ID_MONHOC}>
-                                    {className.TEN_MONHOC}
-                                </option>
-                            ))
-                        ) : null}
-                    </select>
+                    {/*<select className='search_student_class' onChange={(e) => setSubjectPickerScore(e.target.value)} value={subjectPickerScore}>*/}
+                    {/*    <option value="">Chọn Môn</option>*/}
+                    {/*    {listOfSubs.length > 0 ? (*/}
+                    {/*        listOfSubs.map((className, index) => (*/}
+                    {/*            <option key={index} value={className.ID_MONHOC}>*/}
+                    {/*                {className.TEN_MONHOC}*/}
+                    {/*            </option>*/}
+                    {/*        ))*/}
+                    {/*    ) : null}*/}
+                    {/*</select>*/}
                     <p>Điểm đạt tối thiểu:</p>
                     <input className='inputBar' type='number' value={score} onChange={(e) => setScore(e.target.value)} />
                     <button className='btnA' onClick={handleSetChangeScore}>Ghi nhận</button>

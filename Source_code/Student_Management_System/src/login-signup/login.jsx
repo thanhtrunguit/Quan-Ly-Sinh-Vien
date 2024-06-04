@@ -22,10 +22,10 @@ function Login({ setIsLoggedIn }){
     const handleLogin = (e) => {
         e.preventDefault()
         let fdata = new FormData()
-        fdata.append("username", 'admin')
-        fdata.append("password", 'password')
-        // fdata.append("username", username)
-        // fdata.append("password", password)
+        // fdata.append("username", 'admin')
+        // fdata.append("password", 'password')
+        fdata.append("username", username)
+        fdata.append("password", password)
         fetch('http://localhost:8000/login.php', {method: 'POST', body: fdata})
             .then(response => response.json())
             .then(data => {

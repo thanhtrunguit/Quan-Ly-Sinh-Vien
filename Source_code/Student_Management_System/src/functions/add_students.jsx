@@ -69,7 +69,7 @@ function AddStudents(props) {
         <>
             <NavBar/>
             <div className='function_title'>
-                <p>Thêm học sinh</p>
+                <p>TIẾP NHẬN HỌC SINH</p>
             </div>
             <div className='form_container'>
                 <form onSubmit={addStudent}

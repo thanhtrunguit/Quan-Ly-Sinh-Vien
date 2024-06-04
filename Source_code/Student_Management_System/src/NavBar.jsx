@@ -32,10 +32,10 @@ function NavBar(){
                 <ul>
                     {/*<li> <HomeOutlined id='icons'/> <div id='title'><Link to='/home' title='Home' >Home</Link></div></li>*/}
                     <li><HomeOutlined id='icons'/>
-                        <Link to='/home' title='Home' id='title'>Home</Link>
+                        <Link to='/home' title='Trang chủ' id='title'>Trang chủ</Link>
                     </li>
                     <li><UnorderedListOutlined id='icons'/>
-                        <Link to='/functions' title='Functions' id='title'>Function</Link>
+                        <Link to='/functions' title='Functions' id='title'>Chức năng</Link>
                     </li>
                     {/*<li className='login_section_navbar'><Link to='/login'>Login</Link></li>*/}
                     <li><ForkOutlined id='icons'/>
@@ -43,7 +43,7 @@ function NavBar(){
                     </li>
                     <li className='logout_btn'>
                         <LuLogOut id='icons'/>
-                        <Link to='/' id='title' onClick={handleLogout}>Log out</Link>
+                        <Link to='/' id='title' onClick={handleLogout}>Đăng xuất</Link>
                     </li>
                 </ul>
             </nav>

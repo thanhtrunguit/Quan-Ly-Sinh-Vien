@@ -839,3 +839,29 @@ body{
     margin-left:180px;
     margin-top:40px;
 }
+
+.credit{
+    margin-left:250px;
+    display: flex;
+    justify-content: center;
+}
+
+.creditName{
+    border: 1px solid #8f959e;
+    width: 200px;
+    margin: 10px;
+    height: 200px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-size: 25px;
+    margin-top: 180px;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid #070b11;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.creditName:hover{
+    background-color: #f0f0f0;
+}

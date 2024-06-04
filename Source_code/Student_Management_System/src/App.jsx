@@ -15,6 +15,8 @@ import {MalopProvider} from "./MalopContext.jsx";
 import {UserRoleProvider} from "./UserRoleContext.jsx";
 import AdminFunctions from "./functions/AdminFunctions.jsx";
 
+import Credit from "./credits.jsx";
+
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -37,10 +39,7 @@ function App() {
                     <Route path='/finalReportSub' element={<PrivateRoute isLoggedIn={isLoggedIn}><FinalReportSub /></PrivateRoute>} />
                     <Route path='/finalReportSem' element={<PrivateRoute isLoggedIn={isLoggedIn}><FinalReportSem /></PrivateRoute>} />
                     <Route path='/adminFunctions' element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminFunctions /></PrivateRoute>} />
-                    <Route path='/ageSettings' element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminFunctions /></PrivateRoute>} />
-                    <Route path='/classSettings' element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminFunctions /></PrivateRoute>} />
-                    <Route path='/subjectSettings' element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminFunctions /></PrivateRoute>} />
-                    <Route path='/scoreSettings' element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminFunctions /></PrivateRoute>} />
+                    <Route path='/credit' element= {<Credit/>} />
                 </Routes>
             </MalopProvider>
             </UserRoleProvider>

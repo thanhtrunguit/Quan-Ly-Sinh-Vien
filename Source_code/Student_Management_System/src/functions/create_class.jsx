@@ -101,7 +101,6 @@ import {HTMLInputTypeAttribute} from "react";
 import {useState, useEffect, useContext} from "react";
 import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
-import {Data} from "../data.jsx";
 import axios from "axios";
 import {MalopContext} from "../MalopContext.jsx";
 import {UserRole} from "../UserRoleContext.jsx";

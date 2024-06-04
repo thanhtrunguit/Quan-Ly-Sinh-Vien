@@ -46,7 +46,7 @@ function FinalReportSub() {
         <>
         <NavBar/>
         <div className='function_title'>
-                <p>Tổng kết môn</p>
+                <p>TỔNG KẾT MÔN</p>
         </div>
             <div className='select_container'>
                 <div className='select_content'>
@@ -54,7 +54,7 @@ function FinalReportSub() {
                         <select className='search_student_class' id="opts"
                                 onChange={(e) => setHockyPicker(e.target.value)}
                                 value={hockyPicker}>
-                            <option value=''>Chon hoc ky</option>
+                            <option value=''>Chọn học kỳ</option>
                             <option value='1'>Hoc ky 1</option>
                             <option value='2'>Hoc ky 2</option>
                         </select>
@@ -63,7 +63,7 @@ function FinalReportSub() {
                         <select className='search_student_class' id="opts"
                                 onChange={(e) => setYearPicker(e.target.value)}
                                 value={yearPicker}>
-                            <option value=''>Chon nam</option>
+                            <option value=''>Chọn năm</option>
                             <option value='2021'>2021</option>
                             <option value='2022'>2022</option>
                             <option value='2023'>2023</option>
@@ -74,7 +74,7 @@ function FinalReportSub() {
                         <select className='search_student_class'
                                 onChange={(e) => setSubjectPicker(e.target.value)}
                                 value={subjectPicker}>
-                            <option value="">Chon Mon</option>
+                            <option value="">Chọn môn</option>
                             {
                                 listOfSubs.length > 0 ? (
                                     listOfSubs.map((className, index) => (

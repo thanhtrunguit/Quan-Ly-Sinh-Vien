@@ -34,16 +34,16 @@ function FinalReportSem() {
         <>
             <NavBar/>
             <div className='function_title'>
-                <p>Tổng kết hoc ki</p>
+                <p>TỔNG KẾT HỌC KỲ</p>
             </div>
             <div className='select_content final_report'>
             <div className='select_section'>
                 <select className='search_student_class' id="opts"
                         onChange={(e) => setHockyPicker(e.target.value)}
                         value={hockyPicker}>
-                    <option value=''>Chon hoc ky</option>
-                    <option value='1'>Hoc ky 1</option>
-                    <option value='2'>Hoc ky 2</option>
+                    <option value=''>Chọn học kỳ</option>
+                    <option value='1'>Học kỳ 1</option>
+                    <option value='2'>Học kỳ 2</option>
                 </select>
             </div>
 
@@ -51,7 +51,7 @@ function FinalReportSem() {
                 <select className='search_student_class' id="opts"
                         onChange={(e) => setYearPicker(e.target.value)}
                         value={yearPicker}>
-                    <option value=''>Chon nam</option>
+                    <option value=''>Chọn năm</option>
                     <option value='2021'>2021</option>
                     <option value='2022'>2022</option>
                     <option value='2023'>2023</option>

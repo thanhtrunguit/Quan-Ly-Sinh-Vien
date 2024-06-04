@@ -4,7 +4,6 @@ import {useState, useEffect} from "react";
 import NavBar from "../NavBar.jsx";
 import {Link, Navigate} from "react-router-dom";
 import {DiffFilled} from "@ant-design/icons";
-import {Data} from "../data.jsx";
 
 function StudentSearch(props)
 {
@@ -85,7 +84,7 @@ function StudentSearch(props)
                 <p>TRA CỨU HỌC SINH</p>
             </div>
             <input className='searchBar'
-                   onChange={(e) => setSearch(e.target.value)} placeholder='Ho ten hoc sinh' type='text'
+                   onChange={(e) => setSearch(e.target.value)} placeholder='Họ tên học sinh' type='text'
                    name='searchStudent'
                    value={search}
             />
@@ -120,9 +119,9 @@ function StudentSearch(props)
                     <table>
                         <thead>
                         <tr>
-                            <th id='id'>Ma HS</th>
+                            <th id='id'>Mã HS</th>
                             <th id='name'>Tên</th>
-                            <th id='class'>Lop</th>
+                            <th id='class'>Lớp</th>
                             <th id='avgmid1'>TB HK1</th>
                             <th id='avgmid2'>TB HK2</th>
                         </tr>
