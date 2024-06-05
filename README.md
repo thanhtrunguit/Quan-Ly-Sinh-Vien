@@ -2,7 +2,7 @@ src/functions: chứa các chức năng chính. </br>
 folder backend: chứa các file liên quan tới xử lí php. </br>
 folder database: chứa file sql lưu dữ liệu cũng như database. </br>
  
----------------------Hướng dẫn sử dụng---------------------
+----------------------------------------------Hướng dẫn sử dụng----------------------------------------------
 
 1. sử dụng git clone để clone directory về máy, đường dẫn: 'https://github.com/thanhtrunguit/Quan-Ly-Sinh-Vien.git'
 2. mở terminal
