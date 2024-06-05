@@ -21,7 +21,7 @@ folder database: chứa file sql lưu dữ liệu cũng như database. </br>
 8. sau khi thoả các yêu cầu nêu trên, có thể tiến hành đăng nhập, thao tác trực tiếp với các chức năng
 
 Nên xem qua các video hướng dẫn cũng như đọc các tài liệu liên quan tới các công nghệ sử dụng trong sản phẩm để tránh gặp vấn đề trong quá trình cài đặt.
- + React
+ + React js
  + php
  + phpMyAdmin
  + xampp server
