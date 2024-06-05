@@ -327,7 +327,7 @@ const CreateClass = (props) => {
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button className="Cclose" onClick={hideMenu}>Done</button>
+                                    <button className="Cclose" onClick={hideMenu}>Xong</button>
                                 </div>
                             </div>
                         )}

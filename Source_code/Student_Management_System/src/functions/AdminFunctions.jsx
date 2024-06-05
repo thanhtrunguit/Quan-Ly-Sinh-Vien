@@ -364,11 +364,13 @@ function AdminFunctions() {
                                             />
                                         </td>
                                         <td>
-                                            <input
-                                                type="text"
+                                            <select className='search_student_class'
                                                 value={editableRow.LOAI_TAIKHOAN}
                                                 onChange={(e) => handleChange(e, 'LOAI_TAIKHOAN')}
-                                            />
+                                            >
+                                                <option value='admin'>admin</option>
+                                                <option value='users'>users</option>
+                                            </select>
                                         </td>
                                         <td>
                                             <button onClick={() => handleSave(index)}>Save</button>

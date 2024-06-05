@@ -32,11 +32,13 @@ function Login({ setIsLoggedIn }){
                 setUserrole(data)
                 setuserrole(data)
                 setIsLoggedIn(true)
+
             })
             .catch(error => {
                 alert('Sai, tài khoản hoặc mật khẩu')
                 setPassword('')
                 setUsername('')
+                setUserrole('')
             });
 
 
@@ -53,13 +55,16 @@ function Login({ setIsLoggedIn }){
                     }
                 )
                 .catch(error => {
-                    console.error('wrong2!');
+                    alert('tai khoan khong ton tai, dang nhap lai!')
+                    setPassword('')
+                    setUsername('')
+                    setUserrole('')
                 });
         }
         if (userrole === 'admin') {
             navigate('/home', { state: { isLoggedIn: true } });
         }
-    });
+    }, [userrole]);
 
     return (
         <>
